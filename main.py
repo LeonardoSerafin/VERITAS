@@ -2,9 +2,10 @@ from tools.cnn_leaf_disease_tool import initialize_cnn_tool
 from config import settings
 from masfactory import ImageAsset
 from architecture.masfactory_graph import build_architecture
+from architecture.live_monitor import install_live_hooks
 from pprint import pprint
 
-image_path = "dataset/Dataset-splittato/test/ESCA/0b2d8af7-af0b-4192-b60c-5a355b762c65___FAM_B.Msls 4201.JPG"
+image_path = "example_dataset/Black Rot/0aff8add-93ad-4099-97ae-23515744e620___FAM_B.Rot 0748.JPG"
 
 def main():
     initialize_cnn_tool(
@@ -15,6 +16,7 @@ def main():
     )
 
     graph = build_architecture()
+    install_live_hooks(graph)
 
     payload = {
         "location": "conegliano",
