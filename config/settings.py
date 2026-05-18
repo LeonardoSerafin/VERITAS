@@ -13,7 +13,7 @@ IMAGE_SIZE = 256
 VISION_TOP_K = 4
 
 DEFAULT_LLM_MODEL = LegacyOpenAIModel(
-    model_name="google/gemma-4-31b-it",
+    model_name="qwen/qwen3-coder-flash",
     api_key=os.getenv("OPENAI_API_KEY"),
     base_url=os.getenv("BASE_URL")
 )
