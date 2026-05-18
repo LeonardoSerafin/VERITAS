@@ -1,4 +1,5 @@
-﻿# Scripts Guide
+﻿
+# Scripts Guide
 
 Questo file documenta tutti gli script presenti in `scripts/`, con obiettivo, input, output e comandi consigliati.
 

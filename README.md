@@ -1,221 +1,127 @@
-﻿# VERITAS
+# VERITAS
 
-Sistema multi-agente per supporto decisionale in viticoltura, con:
+Sistema multi-agente per supporto decisionale in viticoltura.
 
-- classificazione malattie fogliari da immagine (CNN PyTorch Lightning)
-- arricchimento contesto meteo (Open-Meteo)
-- retrieval semantico su linee guida e prodotti fitosanitari (Qdrant + embedding OpenVINO)
-- decisione finale assistita da LLM (MASFactory)
-
-## 1) Obiettivo del progetto
-
-VERITAS riceve dati di vigneto (localita, fase fenologica, storico trattamenti, immagine foglia) e produce un report decisionale tecnico che integra:
-
-- ipotesi diagnostica visiva e confidenza
+Funzioni principali:
+- classificazione malattia fogliare da immagine (CNN)
 - contesto meteo locale
-- evidenze da documenti tecnici e base prodotti
-- raccomandazione prudente, motivata e tracciabile
+- retrieval semantico su linee guida/prodotti (Qdrant)
+- sintesi decisionale finale con LLM (MASFactory)
 
-Il sistema e pensato come **supporto** al tecnico/agronomo, non come prescrizione definitiva.
+## Architettura
 
-## 2) Architettura logica
+Il grafo e definito in `architecture/masfactory_graph.py`.
 
-Il grafo e definito in `architecture/masfactory_graph.py` e usa 5 nodi:
+Nodi principali:
+1. `InputParserNode`
+2. `VisionAgentNode`
+3. `ContextAgentNode`
+4. `ConditionalNode`
+5. `RAGAgentNode` (solo se malattia != Healthy)
+6. `BypassNode` (solo se malattia == Healthy)
+7. `DecisionAgentNode`
 
-1. `InputParserNode`: riceve payload e lo smista.
-2. `VisionAgentNode`: classificazione immagine foglia (`tools/cnn_leaf_disease_tool.py`).
-3. `ContextAgentNode`: contesto agronomico + tool meteo (`tools/weather_tool.py`).
-4. `RAGAgentNode`: retrieval semantico via Qdrant (`tools/rag_retrieval_tool.py`).
-5. `DecisionAgentNode`: sintesi finale multi-sorgente.
+## Requisiti
 
-```mermaid
-flowchart LR
-    A["Entry Payload"] --> B["InputParserNode"]
-    B --> C["VisionAgentNode"]
-    B --> D["ContextAgentNode"]
-    B --> E["RAGAgentNode"]
-    C --> E
-    C --> F["DecisionAgentNode"]
-    D --> F
-    E --> F
-    F --> G["decision_report"]
-```
+- Python 3.10+
+- Windows + PowerShell
+- accesso internet per API LLM e meteo
 
-## 3) Struttura repository (reale, sintetica)
-
-```text
-VERITAS/
-|- main.py
-|- config/
-|  `- settings.py
-|- architecture/
-|  `- masfactory_graph.py
-|- agents/
-|  |- InputParser.py
-|  |- VisionAgent.py
-|  |- ContextAgent.py
-|  |- RAGAgent.py
-|  `- DecisionAgent.py
-|- tools/
-|  |- cnn_leaf_disease_tool.py
-|  |- weather_tool.py
-|  |- embedding_tool.py
-|  |- qdrant_client_factory.py
-|  `- rag_retrieval_tool.py
-|- scripts/
-|  |- export_embedding_openvino.py
-|  |- chunk_markdown_documents.py
-|  |- chunk_products_json.py
-|  |- build_qdrant_index.py
-|  |- test_rag_search.py
-|  `- inline_html_tables.py
-|- data/
-|  |- guidelines/
-|  `- products/
-|- dataset/
-|- models/
-`- vector_store/
-```
-
-## 4) Stack tecnico
-
-- Orchestrazione agenti: `masfactory`
-- Vision: `torch`, `torchvision`, `pytorch-lightning`, `Pillow`
-- Retrieval: `qdrant-client`, `sentence-transformers`, `tqdm`
-- Embedding accelerato: `openvino`, `optimum-intel`, `nncf`
-- Meteo: Open-Meteo API (geocoding + forecast)
-
-## 5) Prerequisiti
-
-- Windows + PowerShell (setup corrente del progetto)
-- Python (launcher `py` disponibile)
-- Connessione internet per:
-  - chiamate LLM (`BASE_URL` configurato)
-  - chiamate Open-Meteo
-  - eventuale export embedding da Hugging Face
-
-## 6) Installazione
-
-1. Crea e attiva virtualenv (se non usi quella gia presente):
+Installa dipendenze:
 
 ```powershell
 py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-```
-
-2. Installa dipendenze:
-
-```powershell
 pip install -r requirements.txt
 ```
 
-3. Configura `.env` (chiavi rilevate nel progetto):
+## Configurazione `.env`
+
+Crea un file `.env` nella root del progetto con:
 
 ```env
-OPENAI_API_KEY=...
-BASE_URL=...
+OPENAI_API_KEY=your_key_here
+BASE_URL=your_llm_base_url_here
 ```
 
-## 7) Configurazione principale (`config/settings.py`)
+## Cosa manca per poter runnare questa repo
 
-Parametri critici:
+Questi asset sono ignorati e quindi non arrivano da GitHub:
+- `dataset/` (dataset completo immagini)
+- `models/embeddings/` (modello embedding OpenVINO locale)
+- `vector_store/` (database vettoriale Qdrant locale)
+- `.env`
 
-- CNN:
-  - `MODEL_PATH`
-  - `DATASET_DIR`
-  - `IMAGE_SIZE`
-  - `VISION_TOP_K`
-- LLM:
-  - `DEFAULT_LLM_MODEL` (usa `LegacyOpenAIModel`)
-- RAG/Embedding:
-  - `EMBEDDING_MODEL_LOCAL_PATH`
-  - `EMBEDDING_MODEL_NAME`
-  - `OPENVINO_DEVICE`
-  - `QDRANT_LOCAL_PATH`
-  - `QDRANT_COLLECTION_GUIDELINES`
-  - `QDRANT_COLLECTION_PRODUCTS`
+Asset invece presenti in repo:
+- `models/modello_cnn_vine_disease-AdaptiveAvgPool2d--99.5.ckpt` (checkpoint CNN)
+- `example_dataset/` (mini dataset per bootstrap rapido)
+- chunk JSONL gia pronti in `data/guidelines/chunks/` e `data/products/chunks/`
 
-Nota: il progetto e configurato per usare prima il modello embedding OpenVINO locale.
+## Bootstrap su macchina nuova (clone-and-run)
 
-## 8) Run end-to-end
+### 1) Scegli dataset per la CNN
 
-Esecuzione di esempio:
+Il codice usa `DATASET_DIR` in `config/settings.py` per leggere le classi.
+
+Se non hai il dataset completo, usa subito `example_dataset`:
+- imposta `DATASET_DIR = PROJECT_ROOT / "example_dataset"` in `config/settings.py`
+
+Se hai il dataset completo, mantieni:
+- `DATASET_DIR = PROJECT_ROOT / "dataset" / "Dataset-splittato" / "train"`
+- dataset completo scaricabile da Kaggle: https://www.kaggle.com/datasets/leonardoserafinn/grapevine-desease-splitted
+
+### 2) Prepara modello embedding locale (OpenVINO)
+
+```powershell
+py -3 scripts/export_embedding_openvino.py --verify
+```
+
+Questo popola `models/embeddings/qwen3-embedding-0.6b-openvino/`.
+
+### 3) Ricrea il vector store locale Qdrant
+
+```powershell
+py -3 scripts/build_qdrant_index.py --target all --recreate
+```
+
+Questo popola `vector_store/qdrant_local/`.
+
+### 4) Esegui end-to-end
 
 ```powershell
 py -3 main.py
 ```
 
-`main.py`:
+## Output runtime (monitor live)
 
-1. inizializza la CNN una volta
-2. costruisce il grafo MASFactory
-3. invia payload demo (inclusa immagine foglia)
-4. stampa il risultato finale (`decision_report`)
+Durante `main.py` vedrai log in tempo reale via hook MASFactory:
+- `[START] <NodeName>`
+- `[OUTPUT] <NodeName>: ...`
+- `[END] <NodeName> (<ms>)`
 
-## 9) Pipeline dati e indicizzazione
+Il risultato finale viene poi stampato con `pprint`.
 
-Flusso consigliato:
+## Script utili
 
-1. Export embedding OpenVINO locale (one-shot)
-2. Chunking linee guida Markdown
-3. Chunking dataset prodotti JSON
-4. Build indice Qdrant
-5. Test retrieval
+Documentazione operativa completa in:
+- `scripts/README.md`
 
-La guida operativa completa e in:
+Comandi piu usati:
 
-- [`scripts/README.md`](scripts/README.md)
-
-## 10) Stato dati presenti in repository (snapshot attuale)
-
-- Classi CNN train: `Black Rot`, `ESCA`, `Healthy`, `Leaf Blight`
-- Split immagini:
-  - train: 6318
-  - val: 1353
-  - test: 1356
-- Chunks linee guida: 2192
-- Chunks prodotti: 17622
-- Collection Qdrant locali presenti:
-  - `vine_guidelines`
-  - `plant_protection_products`
-
-## 11) Input e output attesi
-
-Input minimo (entry payload):
-
-```python
-{
-  "location": "...",
-  "growth_stage": "...",
-  "wine_type": "...",
-  "recent_treatments": "...",
-  "image": ImageAsset.from_path("...")
-}
+```powershell
+py -3 scripts/export_embedding_openvino.py --verify
+py -3 scripts/build_qdrant_index.py --target all --recreate
+py -3 scripts/test_rag_search.py --collection guidelines --query "peronospora vite fioritura" --top-k 5 --region Veneto
 ```
 
-Output principale:
-
-```python
-{
-  "decision_report": "..."
-}
-```
-
-## 12) Troubleshooting rapido
+## Troubleshooting rapido
 
 - Errore modello embedding locale non trovato:
-  - eseguire `py -3 scripts/export_embedding_openvino.py`
-- Retrieval vuoto/non utile:
-  - verificare che chunk JSONL esistano
-  - ricostruire indice con `scripts/build_qdrant_index.py --recreate`
-- Errori su API meteo:
-  - controllare connettivita e localita passata al tool
-
-## 13) File chiave da leggere per onboarding
-
-- `main.py`
-- `architecture/masfactory_graph.py`
-- `agents/*.py`
-- `tools/*.py`
-- `config/settings.py`
-- `scripts/README.md`
+  - riesegui `py -3 scripts/export_embedding_openvino.py --verify`
+- Retrieval vuoto o inconsistente:
+  - ricrea indice con `py -3 scripts/build_qdrant_index.py --target all --recreate`
+- Errore su classi CNN/dataset mancante:
+  - verifica `DATASET_DIR` in `config/settings.py`
+  - per test rapido usa `example_dataset`
+- Errore API meteo/LLM:
+  - verifica connettivita e valori in `.env`

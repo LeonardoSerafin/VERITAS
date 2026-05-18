@@ -6,8 +6,9 @@ pytorch-lightning
 qdrant-client
 sentence-transformers
 tqdm
+python-dotenv
 
-# to use intel® OpenVINO™ toolkit for model optimization and inference using the Intel GPU
+# Optional but recommended for OpenVINO embedding export/inference if you have an Intel CPU/GPU/VPU:
 openvino>=2026.0.0
 optimum-intel>=1.27.0
 nncf
