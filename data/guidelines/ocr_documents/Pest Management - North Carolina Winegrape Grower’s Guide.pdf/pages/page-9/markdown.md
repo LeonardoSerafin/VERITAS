@@ -1,0 +1,15 @@
+The North Carolina Winegrape Grower's Guide
+
+often surrounded by a small yellow halo. Rachis infections are common and are characterized by necrotic circular to elongated lesions. Fruit rot does not occur in many grape-growing areas, but in North Carolina, the pathogen may infect fruit, causing it to turn brown and become covered with black, pimple-like fruiting bodies (Figure 8-10). These fruit eventually shrivel into mummies that are often confused with black rot mummies.
+
+Phomopsis viticola, cause of phomopsis cane and leaf spot and fruit rot, overwinters as black fruiting bodies (pycnidia) on canes, wood, and fruit infected the previous season. In springtime, when weather is cool and wet, tiny spores (conidia) are released from pycnidia and are splashed by rain to young shoots and leaves. Distinct black lesions form on shoots and leaves, and if wet weather continues, serve as an additional source of inoculum for infections of rachises and young fruit. These infections may occur from just prior to bloom until fruit is pea-sized, at which time the fungus becomes latent due to the warmer summer temperatures. At harvest when grapes mature, the latent infections become active and the fruit eventually rot, turn brown and shrivel into mummies. Pycnidia are produced over the surface of the rotting fruit.
+
+## Management Options
+
+Cultural - Good horticultural practices that facilitate drying within the canopy in conjunction with sanitation are key to successful management of phomopsis disease. Dead wood, rachises, diseased canes, and mummified fruit on the vine and ground are all overwintering sites for *P. viticola* and need to be carefully removed from the vineyard during the dormant season to reduce the inoculum carried over to the next season.
+
+Chemical - The prebloom through postbloom sprays are most important for preventing fruit infections. In problem vineyards, fungicides may need to be started at 1-inch shoot growth.
+
+## Powdery Mildew
+
+Powdery mildew is one of the most common grape diseases worldwide. All varieties of *Vitis vinifera*, French-American hybrids, and *V. labrusca* grown in North Carolina are susceptible (Table 8-2). Severe infections can reduce vine growth and yield and predispose fruit to rot fungi. The disease is named for the ash-gray to white growth of the fungus on the surface of infected leaves and fruit. Infections on leaves first appear as small yellow green blotches, about 1/2 inch in diameter, on the upper leaf surface. As lesions enlarge they become covered with the diagnostic white mycelial growth (Figure 8-11). On some varieties, veinlets on the lower leaf surface turn brown beneath the lesions. Young heavily infected leaves may become distorted. Lesions tend to "disappear" during hot summer weather, often leaving darkened areas on the leaf where the infections

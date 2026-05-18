@@ -1,0 +1,2 @@
+https://www.regione.piemonte.it/web/temi/agricoltura/agroambiente-meteo-suoli/schede-monitoraggio-agrometeorologico-campo
+https://www.regione.piemonte.it/web/temi/agricoltura/agroambiente-meteo-suoli/schede-monitoraggio-agrometeorologico-campo

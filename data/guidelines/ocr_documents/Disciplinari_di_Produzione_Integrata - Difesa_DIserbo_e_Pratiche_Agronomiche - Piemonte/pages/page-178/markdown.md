@@ -1,0 +1,10 @@
+Allegato IV
+(Classificazione FRAC, IRAC, HRAC)
+
+# MECCANISMO D'AZIONE DEI FUNGICIDI DISPONIBILI PER LA DIFESA DAI FUNGHI PATOGENI
+# (CLASSIFICAZIONE FRAC)
+
+[tbl-138.html](tbl-138.html)
+
+Disciplinari Produzione Integrata - anno 2025
+178

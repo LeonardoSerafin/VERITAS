@@ -1,0 +1,5 @@
+# PARTE TERZA: DIFESA E DISERBO PER LE COLTURE ERBACEE
+
+Disciplinari Produzione Integrata - anno 2025
+
+COLTURE ERBACEE

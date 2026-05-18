@@ -1,0 +1,1 @@
+https://www.regione.veneto.it/web/agricoltura-e-foreste/controllo-e-regolazione-delle-irroratrici

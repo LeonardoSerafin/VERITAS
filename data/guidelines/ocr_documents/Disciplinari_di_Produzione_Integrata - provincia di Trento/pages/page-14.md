@@ -1,0 +1,25 @@
+# Pagina 14
+
+**DISCIPLINARE DI PRODUZIONE INTEGRATA - PROVINCIA AUTONOMA DI TRENTO - EDIZIONE 2026**
+
+<table>
+<caption><strong>DIFESA Vite 2026 v1</strong></caption>
+<thead><tr><th>Avversità</th><th>Nome latino</th><th>Criteri di intervento: vincoli</th><th>Criteri di intervento: consigli</th><th>Sostanza attiva</th><th>Sostanze non soggette alle limitazioni d’uso per avversità</th><th>Gruppo chimico</th><th>(1) n. max. interv. per singola s.a. indip. dall’avv.</th><th>(2) n. max. interv. per gruppo di s.a. indip. dall’avv.</th><th>Limitazioni d’uso e note</th><th>Limitazioni d’uso per avversità</th></tr></thead>
+<tbody>
+<tr><td>MAL DELL’ESCA DELLA VITE (AGENTE DEL)</td><td><em>Phaeomoniella chlamydospora; Fomitiporia mediterranea; Phaeoacremonium aleophilum</em></td><td></td><td>Interventi agronomici: couretage. In caso di piante fortemente attaccate procedere all’estirpazione ed allontanamento dal vigneto. In caso di piante infette solo in parte, asportare le parti invase dal fungo, procedere al loro allontanamento dal vigneto e allevare dal legno sano un nuovo germoglio, previa disinfezione della superficie di taglio. Segnare in estate le piante infette; le stesse vanno potate separatamente dalle altre per limitare l’ulteriore diffusione della malattia per mezzo degli attrezzi da taglio che vanno disinfettati.<br><br>Interventi chimici: eventualmente trattare all’epoca del pianto</td><td>Trichoderma spp.</td><td>Sì</td><td>Microrganismi</td><td></td><td></td><td>Trattamento all’epoca del pianto</td><td></td></tr>
+<tr><td>MAL DELL’ESCA DELLA VITE (AGENTE DEL)</td><td><em>Phaeomoniella chlamydospora; Fomitiporia mediterranea; Phaeoacremonium aleophilum</em></td><td></td><td></td><td>Boscalid</td><td></td><td>Inibitori Succinato deidrogenasi SDHI</td><td></td><td></td><td>Trattamenti al bruno sui tagli di potatura; solo in miscela con pyraclostrobin</td><td></td></tr>
+<tr><td>MAL DELL’ESCA DELLA VITE (AGENTE DEL)</td><td><em>Phaeomoniella chlamydospora; Fomitiporia mediterranea; Phaeoacremonium aleophilum</em></td><td></td><td></td><td>Pyraclostrobin</td><td></td><td>Inibitori del chinone membrana esterna QOI</td><td></td><td></td><td>Trattamenti al bruno sui tagli di potatura; solo in miscela con boscalid</td><td></td></tr>
+<tr><td>MAL DELL’ESCA DELLA VITE (AGENTE DEL)</td><td><em>Phaeomoniella chlamydospora; Fomitiporia mediterranea; Phaeoacremonium aleophilum</em></td><td></td><td></td><td>Trichoderma atroviride</td><td>Sì</td><td>Microrganismi</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>MARCIUME ACIDO</td><td>Batteri (<em>Acetobacter</em>); lieviti (<em>Candida</em> spp <em>Kloeckera</em> spp)</td><td></td><td></td><td>Bacillus amyloliquefaciens</td><td>Sì</td><td>Microbici Bacillus sp.</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>MARCIUME ACIDO</td><td>Batteri (<em>Acetobacter</em>); lieviti (<em>Candida</em> spp <em>Kloeckera</em> spp)</td><td></td><td></td><td>Bacillus subtilis</td><td>Sì</td><td>Microbici Bacillus sp.</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>MARCIUME ACIDO</td><td>Batteri (<em>Acetobacter</em>); lieviti (<em>Candida</em> spp <em>Kloeckera</em> spp)</td><td></td><td></td><td>Pythium oligandrum</td><td>Sì</td><td>Microrganismi</td><td></td><td></td><td></td><td></td></tr>
+<tr><td>MARCIUME ACIDO</td><td>Batteri (<em>Acetobacter</em>); lieviti (<em>Candida</em> spp <em>Kloeckera</em> spp)</td><td></td><td></td><td>Cerevisane</td><td>Sì</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>MARCIUME ACIDO</td><td>Batteri (<em>Acetobacter</em>); lieviti (<em>Candida</em> spp <em>Kloeckera</em> spp)</td><td></td><td></td><td>Trichoderma asperellum-Tichoderma atroviride</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>BLACK - ROT</td><td><em>Guignardia bidwellii</em></td><td></td><td></td><td>**Prodotti rameici**</td><td>Sì</td><td>Inorganici</td><td></td><td></td><td>Massimo 28 kg/ha di rame metallo in 7 anni</td><td></td></tr>
+<tr><td>BLACK - ROT</td><td><em>Guignardia bidwellii</em></td><td></td><td></td><td>Zolfo</td><td>Sì</td><td>Inorganici</td><td></td><td></td><td>Solo formulati commerciali registrati</td><td></td></tr>
+<tr><td>BLACK - ROT</td><td><em>Guignardia bidwellii</em></td><td></td><td></td><td>Dithianon</td><td></td><td>Chinoni (antrachinoni)</td><td></td><td>9</td><td></td><td></td></tr>
+<tr><td>BLACK - ROT</td><td><em>Guignardia bidwellii</em></td><td></td><td></td><td>Penconazolo</td><td></td><td>DMI - inibitori di demetilazione - IBE Classe I</td><td></td><td>4</td><td>Impiego consentito fino a fine fioritura</td><td></td></tr>
+<tr><td>BLACK - ROT</td><td><em>Guignardia bidwellii</em></td><td></td><td></td><td>Tetraconazolo</td><td></td><td>DMI - inibitori di demetilazione - IBE Classe I</td><td></td><td>4</td><td></td><td></td></tr>
+<tr><td>BLACK - ROT</td><td><em>Guignardia bidwellii</em></td><td></td><td></td><td>Mefentrifluconazolo</td><td></td><td>DMI - inibitori di demetilazione - IBE Classe I</td><td></td><td>4</td><td></td><td></td></tr>
+</tbody>
+</table>

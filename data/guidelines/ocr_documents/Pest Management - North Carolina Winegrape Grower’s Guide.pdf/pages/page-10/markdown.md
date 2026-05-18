@@ -1,0 +1,17 @@
+were present. Infections of fruit and cluster stems are characterized by ashy gray to white growth on the surface (Figure 8.12). Fruit infections later appear as web-like russet on the surface. Heavily infected fruit often split and crack as they mature. 
+
+The causal fungus, Uncinula necator, overwinters as hyphae in dormant buds or on canes as sexual fruiting structures known as cleistothecia. Leaves emerging from infected buds are covered with whitish mycelium and conidia (spores) that are blown by the wind to emerging leaves and fruit clusters, initiating infections. Primary infections can also occur from ascospores produced in cleistothecia. These infections are most common on the lower leaf surface of leaves growing near the bark of the canes where the cleistothecia have overwintered. Temperatures of 68 to 81°F are optimum for infection, though infections can occur from 43 to 90°F. At optimum temperatures, lesions can develop in 5 to 7 days. Periods with high humidity (85 percent is optimum) without free moisture on the leaf surface favor disease development. Numerous secondary infection cycles can occur during the growing season. Fruit are susceptible from just before bloom until about one month after bloom. Inconspicuous "diffuse" infections on berries can increase the severity of berry rots at harvest. New leaves are susceptible through the growing season, though the disease usually becomes less active during the hot summer months, and
+
+becomes active again in the late summer and fall once temperatures cool.
+
+## Management Options
+
+Cultural - Cultural practices are important in reducing disease severity. Select planting sites with good air circulation and good sun exposure. Training and pruning practices that open the vine canopy to allow air movement can help reduce disease severity. Choose a less susceptible variety (Table 8.2).
+
+Chemical - Fungicide applications for powdery mildew control should begin at 3 to 10 inches of shoot growth (3 to 5 inches of shoot growth where powdery mildew has been a problem in the past) and continue on a regular schedule until 4 weeks after bloom. Sprays beyond this time may not be needed but vines should be scouted on a regular basis for new outbreaks. The disease often becomes a problem after harvest, and vines should be scouted regularly to determine if sprays are needed at this time. Failure to control postharvest outbreaks of powdery mildew may result in early defoliation, predisposing the vines to winter injury. Rotate fungicides and use the full labeled rate to avoid the development of resistance.
+
+## Ripe Rot
+
+Ripe rot is one of the most important summer bunch rot diseases in North Carolina. As infected fruit mature, lesions first appear as slightly sunken or flattened rotted areas. Tiny black fruiting bodies (acervuli) develop within the lesion in a circular arrangement. Rotting fruit are characteristically covered with masses of sticky, pink or salmon-colored spores of the causal fungi (Figure 8.14). As lesions expand, the entire grape eventually rots, and may drop or become shriveled or mummified as it decays.
+
+Ripe rot is caused by Colletotrichum gloeosporioides, C. acutatum, and Glomerella cingulata. These fungi overwinter in canes,

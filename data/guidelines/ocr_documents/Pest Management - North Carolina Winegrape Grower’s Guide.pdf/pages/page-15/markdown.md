@@ -1,0 +1,19 @@
+injury will be more likely to have crown gall problems. Grapevines that appear to be crown gall-free for several years may develop the disease when conditions conducive to infection (generally freeze injury) occur.
+
+Purchase pathogen-indexed nursery stock - Nursery stock should be purchased from a reputable nursery. Discard vines with visible galls. Remember, healthy-looking propagation material may already be systemically infected with the crown gall bacterium.
+
+Cultural - Cultural practices that may assist in managing crown gall are multiple trunking, which allows production to continue on gall-free trunks after infected trunk(s) are removed, and hilling-up of soil up around the crown during the dormant period. Avoid cultural practices that may injure the base of the vine. Good sanitation practices are essential to prevent spread of contaminated material on tools and equipment from vineyard to vineyard. Also, contaminated irrigation sources can carry the pathogen from infested areas to noninfested areas. Removal of infected vines and leaving soil fallow or planting a nonsusceptible crop (legumes or grasses) for 2 to 3 years may help to reduce the chance of carryover of the pathogen, depending on the amount of grape debris that is left in the soil and its rate of decomposition.
+
+Chemical/Biological - Several products are used in an attempt to control crown gall, but no commercially available product will eradicate infections once they have occurred. Products painted onto gall tissue will kill galls at the application site, yet due to the systemic nature of the disease, new galls are likely to appear the following year. Biological control products for crown gall made from Agrobacterium radiobacter (strains K-84, K1026) are not labeled for grapes and are not active against the strain of the crown gall bacterium that affects grapes.
+
+## Grapevine Yellows
+
+Grapevine yellows is a destructive disease of grapevines in many areas of the world, but has only been found Virginia in the Southeast. It is caused by two different strains of a phytoplasma (a bacteria-like organism). The disease is most prevalent on Chardonnay and Riesling, but Sauvignon Blanc and Cabernet Sauvignon are also affected. Initially, yellow patches develop on leaves of one or two shoots. Leaves tend to curl downward and are brittle in texture. Affected shoots fail to harden and may have a weeping appearance. Flowers and bunches may wither and abort before harvest. In Virginia affected vines usually die within 1 to 3 years. The pathogen is spread in the vineyard by leafhoppers, which acquire the bacterium from infected vines in the vineyard or reservoir hosts surrounding the vineyard. Because little is known about the vectors and reservoir hosts of the grapevine yellows phytoplasma, effective control programs have not been developed for the disease in Virginia. Infected vines should be rogued as soon as they are observed to reduce vine-to-vine spread in the vineyard.
+
+## Viral and Virus-like Diseases
+
+There are numerous viral diseases, and other graft transmissible diseases believed to be caused by viruses, that affect grapes. However, few of these diseases cause problems due to current nursery certification programs. Leafroll is the only virus disease that has been confirmed in North Carolina. Tomato/tobacco ringspot virus decline has been found in Virginia and has the potential to become a problem in North Carolina.
+
+## Leafroll
+
+Vines displaying symptoms of leafroll virus are scattered throughout many vineyards in North Carolina. Symptoms are most obvious in the late summer and early autumn when leaves on

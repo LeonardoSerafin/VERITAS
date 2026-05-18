@@ -1,0 +1,21 @@
+☐ Monitor the effectiveness of the repellents. Reapply them or alternate with other tactics if necessary.
+
+☐ Rotate repellents or implement alternative strategies so that deer do not become accustomed to a specific odor or taste.
+
+Besides sprayable repellents, at least three other odor-active repellents have shown some measure of effectiveness in vineyards and orchards.
+
+1. Human Hair. The odor of humans deters deer. Hair can be obtained from barbershops. Place a handful in a mesh bag and hang it from trellis wires around the perimeter of the vineyard. Replace it yearly before the fruit ripens.
+2. Animal Tankage. A mixture of blood and other animal products from slaughterhouses or poultry-processing facilities may be used as a deer repellent. Place ½ to 1 cup of this mixture in mesh bags and hang them from trellis wires around the vineyard perimeter before the fruit attracts deer. Note, however, that this material may attract dogs and other animals.
+3. Soap Bars. Purchase small hotel-use soap bars by the case. Leave the wrappers on to slow weathering. Drill a hole in each bar and thread a string through it; then hang the bars from trellis wires around the perimeter of the vineyard. Fragrant soaps are particularly alarming to deer.
+
+FENCING. Fencing is probably the most effective means of excluding deer from vineyards. Although the initial costs may be high, the near-perfect protection afforded makes fencing economical, especially taking into account the fact that a well-constructed fence will last 20 years or more. Fencing may be either electrified or nonelectric. Nonelectric fences are usually made of a woven mesh and may be 8 to 12 feet in height. The advent of high-tensile-strength (HT) fence wire, coupled with high-voltage, low-impedance electric fence chargers, has made electric fencing the preferred option for deer fences. Many designs exist, but the least complicated may be the most effective and easiest to
+
+install and maintain. The six-wire vertical design depicted in Figure 8.18 shows an effective, modified version of the Penn State five-wire design. An optional hot (+) wire located about 4 or 5 inches above the ground will provide good deterrence of raccoons and other small animals; however, it is essential that the soil under the fence be kept free of weeds that can reduce the effectiveness of the fence charger if they contact the positive wires. The six-wire fence is only about 5 feet tall, a height that deer have no difficulty in jumping. However, approaching deer will first attempt to crawl through or under the fence before jumping. The high-energy output of the charger modifies deer behavior, training deer to avoid the fence.
+
+Products for HT electric fencing are available from numerous sources, including those listed at the end of this chapter. Properly charged fences produce an extremely unpleasant but noninjurious shock. Therefore, electric fences should always be posted to alert people to avoid accidental shock.
+
+Electric fences must be kept charged continuously. Upon being questioned, most growers who complain about ineffective electric fence operation confess that the fence was not constantly charged. It is best to erect the fence before the vineyard ever bears a crop; the deer are much less tempted to investigate what is on the other side. Clear at least 10 feet of brush and trees from the outside (deer side) of the fence. This gives uninitiated deer plenty of room to approach the fence, touch it with their moist noses, and receive a shock. Keep vegetation, including weeds, clear of the charged wires. When vegetation touches the wires, it drains off some of the energy, resulting in rapid battery discharge and insufficient shocking energy. A preemergence herbicide can be applied under the fence to keep weeds down.
+
+Depending upon terrain and how much brush clearing is involved, a battery-operated, solar-recharged, six-wire electric fence can be installed around a 5-acre vineyard for $1,500 to $2,000 in material costs
+
+122

@@ -1,0 +1,42 @@
+# env
+.env
+.env.*
+!.env.example
+
+# Python virtual env
+.venv/
+venv/
+env/
+
+# Python cache/bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Tool/test caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Embedding model
+models/embeddings/
+
+# Grapevine leaf image dataset
+dataset/
+
+# RAG vector database
+vector_store/
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+
+# Generic build/cache
+build/
+dist/
+.cache/

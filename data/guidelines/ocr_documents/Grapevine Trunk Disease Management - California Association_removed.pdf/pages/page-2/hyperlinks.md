@@ -1,0 +1,1 @@
+https://ucanr.edu/sites/eskalenlab/Fruit_Crop_Fungicide_Trials/

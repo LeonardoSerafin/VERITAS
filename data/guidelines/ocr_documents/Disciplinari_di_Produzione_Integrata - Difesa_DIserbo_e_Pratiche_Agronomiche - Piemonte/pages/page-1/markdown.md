@@ -1,0 +1,7 @@
+![img-0.jpeg](img-0.jpeg)
+
+# DISCIPLINARI DI PRODUZIONE INTEGRATA
+
+## DIFESA, DISERBO E PRATICHE AGRONOMICHE
+
+Determinazione dirigenziale n. 239 del 19/03/2025

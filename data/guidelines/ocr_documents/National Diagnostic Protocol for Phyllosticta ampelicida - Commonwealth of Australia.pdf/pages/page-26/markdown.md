@@ -1,0 +1,15 @@
+NDP 13 V2 - National Diagnostic Protocol for Phyllosticta ampelicida
+
+# 8 APPENDICES
+
+## 8.1 Disease cycle
+
+The black rot disease cycle is illustrated in Fig 10. The black rot fungus overwinters primarily in mummified fruit within the vine and on the ground, although it also can overwinter for at least 2 years within lesions of infected shoots that are retained as canes or spurs. Spring rains trigger release of ascospores (airborne sexual spores) that form within mummies on the ground and in the trellis, and these can be blown for moderate distances by wind. Conidia (asexual spores) can also form, both within cane lesions or on mummies that have remained within the trellis, and these are dispersed short distances within the vine or to neighbouring vines by splashing rain drops. This process can start within 1 hour of the onset of rain (at least 0.3 mm) and may continue for up to 8 hours after rainfall ceases (Ferrin and Ramsdell 1977). Infection occurs when either spore type lands on susceptible green tissue such as leaves, blossoms and young fruit and it remains wet for 6-24 h depending on temperature (Spotts 1977).
+
+Ascospores slowly germinate, often taking 36 to 48 hours, but eventually penetrate the young leaves and fruit stems (pedicels). The period of time required for symptoms to appear after the occurrence of infection depends on both the temperature and the age of the tissue at the time of infection, usually taking 8 to 25 days. The period during which these overwintering spores are available to cause infections depends on their source. From mummies on the ground, significant discharge of ascospores begins about 2 to 3 weeks after bud break and is virtually complete within 1 to 2 weeks after the start of flowering. In contrast, mummies within the trellis can continue to release both conidia and ascospores from the early pre-flowering period through veraison. From overwintering cane lesions, conidia can be dispersed from bud break through mid-summer.
+
+Pycnidia, produced within the lesions, continue to release conidia during wet weather throughout the season. The conidia will germinate and infect leaves, blossoms and young fruit and can cause substantial spread of the disease under warm and rainy conditions, particularly if berries are still susceptible to infection after conidia develop. Most berries that become infected near the end of their period of susceptibility do not show symptoms until at least 3 weeks later, and the majority do not begin to rot until 4 to 5 weeks after the infection event. Fruit are most susceptible to infection by the fungus from mid-flowering to about 6 weeks after flowering, and become resistant to infection at maturity. Some older literature has reported that berries become resistant when they reach 5% to 8% sugar, while research in New York indicates that berries become resistant much earlier, 3 to 4 weeks after flowering.
+
+In summary, spore production, dispersal, infection and continued disease are favoured by warm, humid conditions, summer rainfall and persistent dew..
+
+Subcommittee on Plant Health Diagnostics

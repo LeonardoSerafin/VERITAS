@@ -1,0 +1,19 @@
+may be observed near the base of affected vines. Adult moths do not feed on grapes, but mating occurs and additional eggs are laid.
+
+Control of this destructive insect is difficult. Registered insecticides for the larval stage are available, but their efficacy is uncertain. One cultural control measure involves mounding soil beneath the vines after the larval stage has pupated in late June. In theory, the adults are then unable to dig to the surface when they exit their cocoons. Timing of mounding is critical and varies with vineyard location: if done too early, the larvae simply tunnel into the mounded soil before pupating; if done too late, the adults may have already emerged.
+
+## Climbing Cutworms
+
+Climbing cutworms are a group of related moth species whose larvae can feed on grapevine buds. Cutworm feeding results in lack of shoot development from swollen buds or destruction of recently emerged shoots. Cutworm larvae feed at night and seek shelter in soil and debris during the day. The larvae are smooth, brown or gray, and have stripes running the length of their bodies. A quick search around the base of an affected vine can usually reveal the pest.
+
+Feeding begins in the spring when buds begin to enlarge. The extent of damage depends not only on the cutworm population but also on the duration of the bud-break stage. During cool springs, when the period from bud swell to bud break is delayed, damage can be extensive. Vineyards should be monitored carefully for cutworm feeding in the period leading up to bud break and for a week or two thereafter. Treatment with an insecticide is warranted if feeding affects more than 2 percent of the buds. Cutworm control can be improved by spraying in the late afternoon or early evening to ensure that fresh residues are present when feeding commences.
+
+## Bees and Wasps
+
+Bees and wasps usually feed on ripe grapes through injuries caused by other insects, birds, and splits in the skins of overripe berries. Some large wasps are capable of causing direct injury to berries, but honey bees and most wasps are only opportunistic feeders attracted to split or otherwise damaged berries. Insecticides with either zero or very short preharvest interval restrictions may be sprayed to provide some control of bees and wasps. Pickers with severe allergies to bee stings should be advised of sting risks if bees are present at harvest. Latex rubber gloves can provide some protection against stings. Although not extensively tested, some growers have reported limited success at reducing bee populations by locating and destroying nests and by using commercially available bee traps.
+
+## European Red Mite
+
+The European red mite is the principal mite pest of grapes in this region. This mite overwinters as tiny brick-red eggs concentrated around the nodes of canes. The eggs hatch in early spring, and nymphal stages begin feeding on young leaves. Adult mites are red and no larger than the period at the end of this sentence. Six or more generations may occur per year, with the peak population often occurring in late August or September. Deposition of winter eggs begins in August and continues into the fall. Mite feeding causes grape leaves to develop a uniform chlorotic or brownish cast, sometimes referred to as mite bronzing. Older leaves show symptoms before younger leaves. With severe infestations, the impaired photosynthesis caused by mites can delay sugar accumulation. Infestation and foliar symptoms usually develop in "hot spots" but will soon spread to entire vineyard blocks if the mite population continues to build unchecked by miticides or natural predators.
+
+If European red mites were numerous in the previous year and overwintering eggs are com

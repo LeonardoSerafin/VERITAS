@@ -1,0 +1,2 @@
+https://www.regione.piemonte.it/web/temi/agricoltura/servizi-fitosanitari-pan/macchine-distributrici-prodotti-fitosanitari
+https://www.regione.piemonte.it/web/temi/agricoltura/servizi-fitosanitari-pan/macchine-distributrici-prodotti-fitosanitari
