@@ -1,4 +1,5 @@
 masfactory
+streamlit
 torch
 Pillow
 torchvision
