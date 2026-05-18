@@ -92,12 +92,6 @@ Questo popola `vector_store/qdrant_local/`.
 py -3 main.py
 ```
 
-### 5) Avvia interfaccia Streamlit
-
-```powershell
-streamlit run app.py
-```
-
 ## Output runtime (monitor live)
 
 Durante `main.py` vedrai log in tempo reale via hook MASFactory:
@@ -106,6 +100,12 @@ Durante `main.py` vedrai log in tempo reale via hook MASFactory:
 - `[END] <NodeName> (<ms>)`
 
 Il risultato finale viene poi stampato con `pprint`.
+
+## Avvia interfaccia Streamlit
+
+```powershell
+streamlit run app.py
+```
 
 ## Script utili
 
