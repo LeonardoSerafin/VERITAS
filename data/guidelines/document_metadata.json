@@ -1,6 +1,7 @@
 {
   "difesa_integrata_vite_emilia_romagna_2026.md": {
     "doc_id": "difesa_integrata_vite_emilia_romagna_2026",
+    "link": "https://agricoltura.regione.emilia-romagna.it/produzioni-agroalimentari/agricoltura-sostenibile/agricoltura-integrata/Collezione-dpi/dpi_2026/norme-tecniche-di-coltura/arboree/frutticole/difesa-vite-2026.pdf",
     "document_type": "linee_guida",
     "region": "Emilia-Romagna",
     "year": 2026,
@@ -10,6 +11,7 @@
   },
   "Norme tecniche di coltura - Vite da vino - Emilia Romagna.md": {
     "doc_id": "norme_tecniche_coltura_vite_vino_emilia_romagna",
+    "link": "https://agricoltura.regione.emilia-romagna.it/produzioni-agroalimentari/agricoltura-sostenibile/agricoltura-integrata/Collezione-dpi/dpi_2026/norme-tecniche-di-coltura/arboree/frutticole/nta-vite-2026.pdf",
     "document_type": "linee_guida",
     "region": "Emilia-Romagna",
     "year": 2026,
@@ -19,6 +21,7 @@
   },
   "Disciplinari Difesa Integrata Regione Emilia-Romagna 2026.md": {
     "doc_id": "disciplinari_difesa_integrata_regione_emilia_romagna_2026",
+    "link": "https://agricoltura.regione.emilia-romagna.it/produzioni-agroalimentari/agricoltura-sostenibile/agricoltura-integrata/Collezione-dpi/dpi_2026/norme-tecniche-di-coltura/arboree/frutticole/diserbo-vite-2026.pdf",
     "document_type": "disciplinare",
     "region": "Emilia-Romagna",
     "year": 2026,
@@ -28,6 +31,7 @@
   },
   "Protocollo viticolo - Prosecco DOCG - Conegliano_Valdobbiadene.md": {
     "doc_id": "protocollo_viticolo_prosecco_docg_conegliano_valdobbiadene",
+    "link": "https://www.prosecco.it/wp-content/uploads/2025/03/Protocollo_2025_Completo_DEF2.pdf",
     "document_type": "linee_guida",
     "region": "Veneto",
     "year": 2025,
@@ -37,6 +41,7 @@
   },
   "Disciplinari_di_Produzione_Integrata - provincia di Trento.md": {
     "doc_id": "disciplinari_di_produzione_integrata_provincia_di_trento",
+    "link": "https://www.provincia.tn.it/Amministrazione/Documenti/Vite",
     "document_type": "disciplinare",
     "region": "Trentino-Alto Adige",
     "year": 2026,
@@ -46,6 +51,7 @@
   },
   "Grapevine Trunk Disease Management - California Association.md": {
     "doc_id": "grapevine_trunk_disease_management_california_association",
+    "link": "https://ucanr.edu/sites/default/files/2021-01/343478.pdf",
     "document_type": "linee_guida",
     "region": "Generic",
     "year": 2021,
@@ -55,6 +61,7 @@
   },
   "National Diagnostic Protocol for Phyllosticta ampelicida - Commonwealth of Australia.md": {
     "doc_id": "national_diagnostic_protocol_for_phyllosticta_ampelicida_commonwealth_of_australia",
+    "link": "https://www.plantbiosecuritydiagnostics.net.au/app/uploads/2018/11/NDP-13-Black-rot-on-grapevine-Phyllosticta-ampelicida-V2.pdf",
     "document_type": "linee_guida",
     "region": "Generic",
     "year": 2017,
@@ -64,6 +71,7 @@
   },
   "Resoconto Giornata tecnica vite e vino 2021 - provincia di Trento.md": {
     "doc_id": "resoconto_giornata_tecnica_vite_e_vino_2021_provincia_di_trento",
+    "link": "https://openpub.fmach.it/retrieve/4a8739f7-7c3c-42ed-93bb-12312c03ab82/14a%20Giornata%20tecnica%20vite%20e%20vino%202021%20%281%29.pdf",
     "document_type": "linee_guida",
     "region": "Trentino-Alto Adige",
     "year": 2021,
@@ -73,6 +81,7 @@
   },
   "Pest Management - North Carolina Winegrape Grower’s Guide.md": {
     "doc_id": "pest_management_north_carolina_winegrape_grower_guide",
+    "link": "https://content.ces.ncsu.edu/pdf/chapter-8-pest-management/2014-10-16/winegrapes8.pdf",
     "document_type": "linee_guida",
     "region": "Generic",
     "year": 2014,
@@ -82,6 +91,7 @@
   },
   "Linee tecniche di difesa integrata - Veneto.md": {
     "doc_id": "linee_tecniche_di_difesa_integrata_veneto",
+    "link": "https://www.regione.veneto.it/web/fitosanitario/disciplinari-2025",
     "document_type": "linee_guida",
     "region": "Veneto",
     "year": 2025,
@@ -187,6 +197,7 @@
   },
   "Disciplinari_di_Produzione_Integrata - Difesa_DIserbo_e_Pratiche_Agronomiche - Piemonte.md": {
     "doc_id": "disciplinari_di_produzione_integrata_difesa_diserbo_e_pratiche_agronomiche_piemonte",
+    "link": "https://www.winbdf.it/bdf-archivi/disciplinari/dpi_piemonte_2025.pdf",
     "document_type": "disciplinare",
     "region": "Piemonte",
     "year": 2025,
