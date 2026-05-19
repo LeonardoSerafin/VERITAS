@@ -13,6 +13,8 @@ sys.path.append(str(PROJECT_ROOT))
 
 from config.settings import (  # noqa: E402
     EMBEDDING_MODEL_NAME,
+    EMBEDDING_RUNTIME,
+    EMBEDDING_TORCH_DEVICE,
     OPENVINO_DEVICE,
     QDRANT_COLLECTION_GUIDELINES,
     QDRANT_COLLECTION_PRODUCTS,
@@ -71,7 +73,6 @@ def search(
 
     embedding_tool = EmbeddingTool(
         model_name=EMBEDDING_MODEL_NAME,
-        device=OPENVINO_DEVICE,
     )
 
     query_vector = embedding_tool.embed_query(query)
@@ -103,6 +104,10 @@ def search(
     print(f"COLLECTION: {collection_name}")
     print(f"QUERY: {query}")
     print(f"MODEL: {EMBEDDING_MODEL_NAME}")
+    print(f"REQUESTED RUNTIME: {EMBEDDING_RUNTIME}")
+    print(f"REQUESTED TORCH DEVICE: {EMBEDDING_TORCH_DEVICE}")
+    print(f"REQUESTED OPENVINO DEVICE: {OPENVINO_DEVICE}")
+    print(f"SELECTED EMBEDDING: {embedding_tool.describe_runtime()}")
     print("=" * 100)
 
     for i, result in enumerate(results, start=1):

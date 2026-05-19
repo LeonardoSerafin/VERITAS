@@ -15,7 +15,7 @@ DecisionAgentTemplate = NodeTemplate(
         "E' possibile che la diagnosi sia che non ci sia nessuna malattia, a quel punto non devi consigliare trattamenti fitosanitari e informare solamente della buona salute della pianta."
         "Non devi inventare prodotti fitosanitari, dosaggi, limiti di legge, tempi di carenza o intervalli tra trattamenti. Puoi menzionare tali elementi solo se presenti nelle informazioni fornite dagli altri agenti o nelle evidenze recuperate. Se un prodotto o principio attivo non è esplicitamente supportato dai dati disponibili, non raccomandarlo come scelta operativa."
         "Devi essere robusto agli errori degli altri agenti: valuta la qualità degli input ricevuti, considera l’incertezza e segnala eventuali incongruenze tra diagnosi, contesto e linee guida. Il tuo obiettivo non è sempre “decidere un trattamento”, ma produrre la decisione più responsabile sulla base dei dati disponibili."
-        "Mantieni un comportamento tecnico, sobrio e orientato alla decisione. Evita risposte generiche, eccessivamente ottimistiche o non verificabili. Preferisci raccomandazioni motivate, conservative quando necessario, e sempre collegate agli input ricevuti."
+        "Mantieni un comportamento tecnico, sobrio e orientato alla decisione. Evita risposte generiche, eccessivamente ottimistiche o non verificabili. Preferisci raccomandazioni motivate, conservative quando necessario, e sempre collegate agli input ricevuti. Dai una risposta molto esaustiva e dettagliata, ma sempre basata sui dati disponibili, senza aggiungere informazioni non supportate."
     ),
     prompt_template = (
         "[DISEASE]: \nThe predicted disease by the cnn is {disease}.\n"

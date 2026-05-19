@@ -13,7 +13,7 @@ IMAGE_SIZE = 256
 VISION_TOP_K = 4
 
 DEFAULT_LLM_MODEL = LegacyOpenAIModel(
-    model_name="google/gemma-4-31b-it",
+    model_name="google/gemini-3.1-flash-lite",
     api_key=os.getenv("OPENAI_API_KEY"),
     base_url=os.getenv("BASE_URL")
 )
@@ -33,16 +33,21 @@ QDRANT_LOCAL_PATH = PROJECT_ROOT / "vector_store" / "qdrant_local"
 QDRANT_COLLECTION_GUIDELINES = "vine_guidelines"
 QDRANT_COLLECTION_PRODUCTS = "plant_protection_products"
 
-EMBEDDING_BACKEND = "openvino"
-
-EMBEDDING_MODEL_HF_NAME = "Qwen/Qwen3-Embedding-0.6B"
+EMBEDDING_MODEL_NAME = "Qwen/Qwen3-Embedding-0.6B"
 EMBEDDING_MODEL_LOCAL_PATH = PROJECT_ROOT / "models" / "embeddings" / "qwen3-embedding-0.6b-openvino"
 
-# Usa prima il modello locale OpenVINO (pre-esportato).
-EMBEDDING_MODEL_NAME = str(EMBEDDING_MODEL_LOCAL_PATH)
+# Runtime embedding:
+# - "auto": sceglie OpenVINO locale su GPU Intel, altrimenti PyTorch.
+# - "openvino": forza OpenVINO locale.
+# - "torch": forza PyTorch con device automatico.
+#
+# Questi valori sono configurazioni interne, non backend SentenceTransformers.
+EMBEDDING_RUNTIME = "auto"
+EMBEDDING_TORCH_DEVICE = "auto"
+OPENVINO_DEVICE = "GPU"
 
-# Se True, in assenza del modello locale usa Hugging Face (con possibile export on-the-fly).
-# Se False, fallisce con errore esplicito e invita a lanciare lo script di export.
+# Usato solo quando EMBEDDING_RUNTIME="openvino": se False, l'assenza
+# del modello locale OpenVINO produce errore esplicito invece del fallback PyTorch.
 EMBEDDING_ALLOW_HF_FALLBACK = False
 EMBEDDING_BATCH_SIZE = 4
 EMBEDDING_VECTOR_SIZE = 1024
@@ -51,8 +56,6 @@ EMBEDDING_VECTOR_SIZE = 1024
 # EMBEDDING_MODEL_NAME = "Qwen/Qwen3-Embedding-4B"
 # EMBEDDING_VECTOR_SIZE = 2560
 # EMBEDDING_BATCH_SIZE = 1
-
-OPENVINO_DEVICE = "GPU"
 
 # RAG settings
 RAG_TOP_K_GUIDELINES = 8

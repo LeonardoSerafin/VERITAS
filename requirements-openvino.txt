@@ -1,0 +1,6 @@
+# Optional Intel acceleration for embedding export/inference.
+# Install this in addition to requirements.txt if you want VERITAS to use
+# the local OpenVINO embedding model on Intel GPU.
+openvino>=2026.0.0
+optimum-intel>=1.27.0
+nncf
