@@ -25,7 +25,7 @@ Nodi principali:
 
 - Python 3.10+
 - Windows + PowerShell
-- accesso internet per API LLM e meteo
+- accesso internet per API LLM, meteo e primo download del modello embedding Hugging Face
 
 Installa dipendenze:
 
@@ -33,6 +33,12 @@ Installa dipendenze:
 py -3 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+```
+
+Se hai una GPU Intel e vuoi usare il modello embedding OpenVINO locale:
+
+```powershell
+pip install -r requirements-openvino.txt
 ```
 
 ## Configurazione `.env`
@@ -70,13 +76,25 @@ Se hai il dataset completo, mantieni:
 - `DATASET_DIR = PROJECT_ROOT / "dataset" / "Dataset-splittato" / "train"`
 - dataset completo scaricabile da Kaggle: https://www.kaggle.com/datasets/leonardoserafinn/grapevine-desease-splitted
 
-### 2) Prepara modello embedding locale (OpenVINO)
+### 2) Embedding automatici
+
+VERITAS sceglie automaticamente il runtime embedding:
+
+- GPU Intel + modello OpenVINO locale presente: OpenVINO locale
+- GPU NVIDIA disponibile: PyTorch CUDA
+- Apple Silicon: PyTorch MPS
+- fallback: PyTorch CPU
+
+Il default non richiede scelta manuale. Se il modello OpenVINO locale non esiste, il progetto usa il modello Hugging Face `Qwen/Qwen3-Embedding-0.6B` tramite PyTorch.
+
+Per ottimizzare una macchina con GPU Intel, installa le dipendenze OpenVINO e prepara una volta sola il modello locale:
 
 ```powershell
+pip install -r requirements-openvino.txt
 py -3 scripts/export_embedding_openvino.py --verify
 ```
 
-Questo popola `models/embeddings/qwen3-embedding-0.6b-openvino/`.
+Questo popola `models/embeddings/qwen3-embedding-0.6b-openvino/`. Da quel momento, se viene rilevata una GPU Intel, VERITAS usa automaticamente quel modello locale.
 
 ### 3) Ricrea il vector store locale Qdrant
 
@@ -115,15 +133,15 @@ Documentazione operativa completa in:
 Comandi piu usati:
 
 ```powershell
-py -3 scripts/export_embedding_openvino.py --verify
 py -3 scripts/build_qdrant_index.py --target all --recreate
 py -3 scripts/test_rag_search.py --collection guidelines --query "peronospora vite fioritura" --top-k 5 --region Veneto
 ```
 
 ## Troubleshooting rapido
 
-- Errore modello embedding locale non trovato:
-  - riesegui `py -3 scripts/export_embedding_openvino.py --verify`
+- Vuoi accelerare embedding su GPU Intel:
+  - installa `pip install -r requirements-openvino.txt`
+  - esegui `py -3 scripts/export_embedding_openvino.py --verify`
 - Retrieval vuoto o inconsistente:
   - ricrea indice con `py -3 scripts/build_qdrant_index.py --target all --recreate`
 - Errore su classi CNN/dataset mancante:

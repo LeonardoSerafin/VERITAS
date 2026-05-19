@@ -36,7 +36,6 @@ class QdrantRetrieval(Retrieval):
         self._client = get_qdrant_client(settings.QDRANT_LOCAL_PATH)
         self._embedding_tool = EmbeddingTool(
             model_name=settings.EMBEDDING_MODEL_NAME,
-            device=settings.OPENVINO_DEVICE,
         )
 
     def _query_text_from_context_query(self, query: ContextQuery) -> str:

@@ -7,19 +7,20 @@ Questo file documenta tutti gli script presenti in `scripts/`, con obiettivo, in
 
 Ordine tipico di utilizzo:
 
-1. `export_embedding_openvino.py`
-2. `chunk_markdown_documents.py`
-3. `chunk_products_json.py`
-4. `build_qdrant_index.py`
-5. `test_rag_search.py`
+1. `chunk_markdown_documents.py`
+2. `chunk_products_json.py`
+3. `build_qdrant_index.py`
+4. `test_rag_search.py`
 
-`inline_html_tables.py` è uno script di pre-processing opzionale prima del chunking dei Markdown OCR.
+`inline_html_tables.py` e uno script di pre-processing opzionale prima del chunking dei Markdown OCR.
+`export_embedding_openvino.py` e opzionale: serve solo per preparare l'accelerazione OpenVINO su GPU Intel.
 
 ## 1) export_embedding_openvino.py
 
 ### Scopo
 
 Esporta una volta sola il modello embedding da Hugging Face in formato OpenVINO locale.
+VERITAS lo usera automaticamente quando rileva una GPU Intel e trova gli artifact locali.
 
 ### Input principali
 
@@ -36,6 +37,7 @@ Directory modello locale, tipicamente:
 ### Comandi
 
 ```powershell
+pip install -r requirements-openvino.txt
 py -3 scripts/export_embedding_openvino.py
 py -3 scripts/export_embedding_openvino.py --verify
 py -3 scripts/export_embedding_openvino.py --force
@@ -45,6 +47,7 @@ py -3 scripts/export_embedding_openvino.py --force
 
 - Se il modello locale esiste gia, senza `--force` non riesporta.
 - `--verify` prova il caricamento locale subito dopo export.
+- Senza modello locale OpenVINO, gli embedding usano automaticamente PyTorch con CUDA, MPS o CPU.
 
 ## 2) inline_html_tables.py
 
@@ -154,7 +157,14 @@ Metadata principali:
 
 ### Scopo
 
-Indicizza i chunk JSONL su Qdrant locale, generando vettori embedding OpenVINO.
+Indicizza i chunk JSONL su Qdrant locale, generando vettori embedding con il runtime selezionato automaticamente.
+
+Ordine di preferenza:
+
+- GPU Intel + modello OpenVINO locale: OpenVINO locale
+- GPU NVIDIA: PyTorch CUDA
+- Apple Silicon: PyTorch MPS
+- fallback: PyTorch CPU
 
 ### Input
 
@@ -200,8 +210,9 @@ py -3 scripts/test_rag_search.py --collection products --query "fungicida rame" 
 
 ## Troubleshooting script-level
 
-- Errore modello embedding locale mancante:
-  - rieseguire `export_embedding_openvino.py`
+- Vuoi usare OpenVINO su GPU Intel:
+  - installare `pip install -r requirements-openvino.txt`
+  - rieseguire `py -3 scripts/export_embedding_openvino.py --verify`
 - Errore dimensione vettore in indicizzazione:
   - allineare `EMBEDDING_VECTOR_SIZE` con modello reale
 - Retrieval vuoto:

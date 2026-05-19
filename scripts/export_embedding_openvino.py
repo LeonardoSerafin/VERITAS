@@ -74,7 +74,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--model-id",
-        default=settings.EMBEDDING_MODEL_HF_NAME,
+        default=settings.EMBEDDING_MODEL_NAME,
         help="Model ID Hugging Face sorgente.",
     )
     parser.add_argument(

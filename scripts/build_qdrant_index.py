@@ -16,13 +16,16 @@ sys.path.append(str(PROJECT_ROOT))
 from config.settings import (  # noqa: E402
     EMBEDDING_BATCH_SIZE,
     EMBEDDING_MODEL_NAME,
+    EMBEDDING_MODEL_LOCAL_PATH,
+    EMBEDDING_RUNTIME,
+    EMBEDDING_TORCH_DEVICE,
     EMBEDDING_VECTOR_SIZE,
     GUIDELINE_CHUNKS_PATH,
-    OPENVINO_DEVICE,
     PRODUCT_CHUNKS_PATH,
     QDRANT_COLLECTION_GUIDELINES,
     QDRANT_COLLECTION_PRODUCTS,
     QDRANT_LOCAL_PATH,
+    OPENVINO_DEVICE,
 )
 from tools.qdrant_client_factory import get_qdrant_client  # noqa: E402
 from tools.embedding_tool import EmbeddingTool  # noqa: E402
@@ -161,8 +164,11 @@ def index_chunks(
         raise ValueError(f"Nessun chunk trovato in {chunks_path}")
 
     print(f"[INFO] Numero chunks: {len(chunks)}")
-    print(f"[INFO] Modello embedding: {EMBEDDING_MODEL_NAME}")
-    print(f"[INFO] Device OpenVINO: {OPENVINO_DEVICE}")
+    print(f"[INFO] Embedding model HF: {EMBEDDING_MODEL_NAME}")
+    print(f"[INFO] Embedding runtime richiesto: {EMBEDDING_RUNTIME}")
+    print(f"[INFO] PyTorch device richiesto: {EMBEDDING_TORCH_DEVICE}")
+    print(f"[INFO] OpenVINO device richiesto: {OPENVINO_DEVICE}")
+    print(f"[INFO] OpenVINO locale: {EMBEDDING_MODEL_LOCAL_PATH}")
 
     client = get_qdrant_client(QDRANT_LOCAL_PATH)
 
@@ -175,8 +181,8 @@ def index_chunks(
 
     embedding_tool = EmbeddingTool(
         model_name=EMBEDDING_MODEL_NAME,
-        device=OPENVINO_DEVICE,
     )
+    print(f"[INFO] Embedding runtime selezionato: {embedding_tool.describe_runtime()}")
 
     point_id = 0
 
