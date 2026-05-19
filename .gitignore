@@ -21,8 +21,9 @@ __pycache__/
 coverage.xml
 htmlcov/
 
-# Embedding model
+# Embedding/Reranking model
 models/embeddings/
+models/rerankers/
 
 # Grapevine leaf image dataset
 dataset/

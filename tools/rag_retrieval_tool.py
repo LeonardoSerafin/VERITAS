@@ -7,6 +7,7 @@ from qdrant_client.models import FieldCondition, Filter, MatchValue
 from config import settings
 from tools.embedding_tool import EmbeddingTool
 from tools.qdrant_client_factory import get_qdrant_client
+from tools.reranker_tool import RerankerTool
 
 
 
@@ -24,6 +25,8 @@ class QdrantRetrieval(Retrieval):
         min_score: float | None = None,
         default_document_type: str | None = None,
         force_document_type_filter: bool = True,
+        candidate_top_k: int = settings.RAG_CANDIDATE_TOP_K_GUIDELINES,
+        rerank_enabled: bool = settings.RAG_RERANK_ENABLED,
     ) -> None:
         super().__init__(context_label=context_label, passive=passive, active=active)
 
@@ -37,6 +40,10 @@ class QdrantRetrieval(Retrieval):
         self._embedding_tool = EmbeddingTool(
             model_name=settings.EMBEDDING_MODEL_NAME,
         )
+
+        self.candidate_top_k = int(candidate_top_k or self._default_top_k)
+        self.rerank_enabled = bool(rerank_enabled)
+        self._reranker_tool: RerankerTool | None = None
 
     def _query_text_from_context_query(self, query: ContextQuery) -> str:
         text = (query.query_text or "").strip()
@@ -110,8 +117,13 @@ class QdrantRetrieval(Retrieval):
                 limit=limit,
                 with_payload=True,
             ).points
+        
+    def _get_reranker_tool(self) -> RerankerTool:
+        if self._reranker_tool is None:
+            self._reranker_tool = RerankerTool()
+        return self._reranker_tool
 
-    def get_blocks(self, query: ContextQuery, *, top_k: int = 8) -> list[ContextBlock]:
+    def get_blocks(self, query: ContextQuery, *, top_k: int = settings.RAG_TOP_K_GUIDELINES) -> list[ContextBlock]:
         query_text = self._query_text_from_context_query(query)
         if not query_text:
             return []
@@ -123,30 +135,74 @@ class QdrantRetrieval(Retrieval):
         query_vector = self._embedding_tool.embed_query(query_text)
         query_filter = self._build_filter(query)
 
+        candidate_k = max(k, self.candidate_top_k)
+
         points = self._search_points(
             query_vector=query_vector,
             query_filter=query_filter,
-            limit=k,
+            limit=candidate_k,
         )
 
-        blocks: list[ContextBlock] = []
+        candidates: list[dict[str, Any]] = []
+
         for point in points:
             payload: dict[str, Any] = point.payload or {}
-            score = float(point.score) if point.score is not None else None
+            vector_score = float(point.score) if point.score is not None else None
 
-            if self._min_score is not None and score is not None and score < self._min_score:
+            if self._min_score is not None and vector_score is not None and vector_score < self._min_score:
                 continue
 
             text = payload.get("text") or ""
             if not isinstance(text, str) or not text.strip():
                 continue
 
+            candidates.append({
+                "payload": payload,
+                "vector_score": vector_score,
+                "text": text,
+            })
+
+        if self.rerank_enabled and len(candidates) > 1:
+            reranker = self._get_reranker_tool()
+
+            ranked = reranker.rank(
+                query=query_text,
+                documents=[candidate["text"] for candidate in candidates],
+            )
+
+            reranked_candidates: list[dict[str, Any]] = []
+
+            for item in ranked:
+                candidate = candidates[item.index]
+                candidate["rerank_score"] = item.score
+                reranked_candidates.append(candidate)
+            
+            candidates = reranked_candidates
+
+        candidates = candidates[:k]
+
+        # Block construction to be given to the agent using the sorted candidates
+        blocks: list[ContextBlock] = []
+
+        for candidate in candidates:
+            payload = candidate["payload"]
+
+            score = candidate.get("rerank_score")
+            if score is None:
+                score = candidate.get("vector_score")
+            
             metadata = payload.get("metadata")
             if not isinstance(metadata, dict):
                 metadata = {}
+            
+            metadata = {
+                **metadata,
+                "vector_score": candidate.get("vector_score"),
+                "rerank_score": candidate.get("rerank_score"),
+            }
 
             block = ContextBlock(
-                text=text,
+                text=candidate["text"],
                 uri=payload.get("source_file"),
                 chunk_id=payload.get("chunk_id"),
                 score=score,
@@ -154,6 +210,8 @@ class QdrantRetrieval(Retrieval):
                 metadata=metadata,
                 dedupe_key=payload.get("chunk_id") or payload.get("doc_id"),
             )
+
             blocks.append(block)
 
         return blocks
+

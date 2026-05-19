@@ -8,7 +8,8 @@ def create_guidelines_retriever():
         context_label="GUIDELINES_QDRANT",
         passive=True,
         active=False,
-        default_top_k=settings.RAG_TOP_K_GUIDELINES
+        default_top_k=settings.RAG_TOP_K_GUIDELINES,
+        candidate_top_k=settings.RAG_CANDIDATE_TOP_K_GUIDELINES,
     )
 
 RAGAgentTemplate = NodeTemplate(

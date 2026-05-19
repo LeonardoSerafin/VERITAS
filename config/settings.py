@@ -13,7 +13,7 @@ IMAGE_SIZE = 256
 VISION_TOP_K = 4
 
 DEFAULT_LLM_MODEL = LegacyOpenAIModel(
-    model_name="google/gemini-3.1-flash-lite",
+    model_name="google/gemma-4-31b-it",
     api_key=os.getenv("OPENAI_API_KEY"),
     base_url=os.getenv("BASE_URL")
 )
@@ -58,5 +58,29 @@ EMBEDDING_VECTOR_SIZE = 1024
 # EMBEDDING_BATCH_SIZE = 1
 
 # RAG settings
+RAG_RERANK_ENABLED = True
+
+RAG_CANDIDATE_TOP_K_GUIDELINES = 50
+RAG_CANDIDATE_TOP_K_PRODUCTS = 50
+
+RERANKER_MODEL_NAME = "Qwen/Qwen3-Reranker-0.6B"
+RERANKER_MODEL_LOCAL_PATH = PROJECT_ROOT / "models" / "rerankers" / "qwen3-reranker-0.6b-openvino"
+
+# Runtime reranker:
+# - "auto": sceglie OpenVINO locale su GPU Intel, altrimenti PyTorch.
+# - "openvino": forza OpenVINO locale.
+# - "torch": forza PyTorch con device automatico.
+RERANKER_RUNTIME = "auto"
+RERANKER_TORCH_DEVICE = "auto"
+RERANKER_OPENVINO_DEVICE = "GPU"
+RERANKER_ALLOW_HF_FALLBACK = False
+RERANKER_BATCH_SIZE = 4
+
+RERANKER_INSTRUCTION = (
+    "Given a query about viticulture, grapevine diseases, agronomic guidelines, "
+    "plant protection products, active substances, legal constraints, treatment timing, "
+    "and safety rules, judge whether the document passage is relevant."
+)
+
 RAG_TOP_K_GUIDELINES = 8
 RAG_TOP_K_PRODUCTS = 5

@@ -6,5 +6,7 @@ torchvision
 pytorch-lightning
 qdrant-client
 sentence-transformers
+transformers>=4.51.0
 tqdm
 python-dotenv
+accelerate

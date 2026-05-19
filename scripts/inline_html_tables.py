@@ -19,8 +19,6 @@ def detect_current_page(line: str, current_page: Optional[int]) -> Optional[int]
     - # Pagina 12
     - <!-- page: 12 -->
     - page-12
-
-    Se il tuo Markdown ha un formato diverso, aggiungi un pattern qui.
     """
 
     patterns = [
