@@ -96,17 +96,17 @@ def inject_css() -> None:
 
 
 @st.cache_resource(show_spinner=False)
-def initialize_runtime(
-    _initialize_cnn_tool: Any,
-    _settings: Any,
-) -> bool:
-    _initialize_cnn_tool(
-        checkpoint_path=str(_settings.MODEL_PATH),
-        data_dir=str(_settings.DATASET_DIR),
-        image_size=_settings.IMAGE_SIZE,
-        top_k=_settings.VISION_TOP_K,
+def initialize_runtime() -> dict[str, Any]:
+    deps = load_runtime_dependencies()
+    settings = deps["settings"]
+
+    deps["initialize_cnn_tool"](
+        checkpoint_path=str(settings.MODEL_PATH),
+        data_dir=str(settings.DATASET_DIR),
+        image_size=settings.IMAGE_SIZE,
+        top_k=settings.VISION_TOP_K,
     )
-    return True
+    return deps
 
 
 def render_agent_status(slot: Any, agent_state: dict[str, dict[str, Any]]) -> None:
@@ -358,24 +358,6 @@ def main() -> None:
         unsafe_allow_html=True,
     )
 
-    try:
-        deps = load_runtime_dependencies()
-    except Exception as exc:
-        st.error("Impossibile inizializzare l'app: dipendenze o moduli non disponibili.")
-        with st.expander("Dettagli tecnici inizializzazione"):
-            st.code(f"{type(exc).__name__}: {exc}\n\n{traceback.format_exc()}")
-        st.info("Verifica di avviare Streamlit nello stesso ambiente Python dove hai installato requirements.")
-        return
-
-    try:
-        with st.spinner("Inizializzazione componenti runtime...", show_time=True):
-            initialize_runtime(deps["initialize_cnn_tool"], deps["settings"])
-    except Exception as exc:
-        st.error("Errore durante il caricamento runtime (CNN/config).")
-        with st.expander("Dettagli tecnici runtime"):
-            st.code(f"{type(exc).__name__}: {exc}\n\n{traceback.format_exc()}")
-        return
-
     col_left, col_right = st.columns([1, 1.2], gap="large")
 
     with col_left:
@@ -398,10 +380,13 @@ def main() -> None:
         no_recent_treatments = st.checkbox("Nessun trattamento recente", value=False)
         treatment_rows = render_treatments_input(disabled=no_recent_treatments)
 
-    submit = st.button("Invia analisi", type="primary", use_container_width=True)
+    submit_slot = st.empty()
+    submit = submit_slot.button("Invia analisi", type="primary", use_container_width=True)
     status_slot = st.empty()
 
     if submit:
+        submit_slot.empty()
+
         errors = validate_inputs(
             uploaded_file=uploaded_file,
             location=location,
@@ -420,25 +405,27 @@ def main() -> None:
         )
 
         try:
-            image_bytes = uploaded_file.getvalue()
-            image_asset = deps["ImageAsset"].from_bytes(
-                image_bytes,
-                mime_type=uploaded_file.type or "image/jpeg",
-                filename=uploaded_file.name,
-            )
-
-            payload = {
-                "location": location.strip(),
-                "growth_stage": growth_stage,
-                "wine_type": wine_type.strip(),
-                "recent_treatments": recent_treatments,
-                "image": image_asset,
-            }
-
-            graph = deps["build_architecture"]()
-            install_agent_progress_hooks(graph, deps["Node"], status_slot)
-
             with st.spinner("Analisi in corso...", show_time=True):
+                deps = initialize_runtime()
+
+                image_bytes = uploaded_file.getvalue()
+                image_asset = deps["ImageAsset"].from_bytes(
+                    image_bytes,
+                    mime_type=uploaded_file.type or "image/jpeg",
+                    filename=uploaded_file.name,
+                )
+
+                payload = {
+                    "location": location.strip(),
+                    "growth_stage": growth_stage,
+                    "wine_type": wine_type.strip(),
+                    "recent_treatments": recent_treatments,
+                    "image": image_asset,
+                }
+
+                graph = deps["build_architecture"]()
+                install_agent_progress_hooks(graph, deps["Node"], status_slot)
+
                 raw_result = graph.invoke(payload)
 
             result = parse_graph_output(raw_result)

@@ -8,9 +8,11 @@ ContextAgentTemplate = NodeTemplate(
     Agent,
     model = settings.DEFAULT_LLM_MODEL,
     instructions = (
-        "You are a helpful assistant for farmers to identify diseases in their grapevines."
-        "Your job is to prepare a rich context for the Decision Agent in order to have a more precise diagnosis of the disease affecting the vine."
-        "Use get_weather_forecast tool to get the weather forecast for the next days"
+        "Sei un assistente utile per gli agricoltori per identificare le malattie nelle loro viti."
+        "Il tuo compito è preparare un contesto ricco per il Decision Agent al fine di avere una diagnosi più precisa della malattia che colpisce la vite."
+        "Utilizza lo strumento get_weather_forecast per ottenere le previsioni meteo per i prossimi giorni"
+        "Il report meteo che fornisci deve essere dettagliato e specifico per la località del vigneto, includendo informazioni su temperatura, umidità, precipitazioni, vento per ogni singolo giorno."
+        "Non fare nessun tipo di assunzione su malattie, fornisci solo informazioni contestuali che possano essere utili al Decision Agent per la diagnosi e la gestione della malattia."
     ),
     prompt_template = (
         "[LOCATION] \nThe vineyard is located in {location}.\n\n "
