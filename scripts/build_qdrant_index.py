@@ -184,41 +184,44 @@ def index_chunks(
     )
     print(f"[INFO] Embedding runtime selezionato: {embedding_tool.describe_runtime()}")
 
-    point_id = 0
+    try:
+        point_id = 0
 
-    batches = list(batched(chunks, EMBEDDING_BATCH_SIZE))
+        batches = list(batched(chunks, EMBEDDING_BATCH_SIZE))
 
-    for batch in tqdm(batches, desc=f"Indexing {collection_name}"):
-        texts = [chunk["text"] for chunk in batch]
+        for batch in tqdm(batches, desc=f"Indexing {collection_name}"):
+            texts = [chunk["text"] for chunk in batch]
 
-        vectors = embedding_tool.embed_texts(
-            texts,
-            batch_size=EMBEDDING_BATCH_SIZE,
-        )
-
-        points = []
-
-        for chunk, vector in zip(batch, vectors):
-            if len(vector) != EMBEDDING_VECTOR_SIZE:
-                raise ValueError(
-                    f"Dimensione embedding inattesa: {len(vector)}. "
-                    f"Attesa: {EMBEDDING_VECTOR_SIZE}. "
-                    "Controlla EMBEDDING_VECTOR_SIZE in settings.py."
-                )
-
-            point = PointStruct(
-                id=point_id,
-                vector=vector,
-                payload=build_payload(chunk),
+            vectors = embedding_tool.embed_texts(
+                texts,
+                batch_size=EMBEDDING_BATCH_SIZE,
             )
 
-            points.append(point)
-            point_id += 1
+            points = []
 
-        client.upsert(
-            collection_name=collection_name,
-            points=points,
-        )
+            for chunk, vector in zip(batch, vectors):
+                if len(vector) != EMBEDDING_VECTOR_SIZE:
+                    raise ValueError(
+                        f"Dimensione embedding inattesa: {len(vector)}. "
+                        f"Attesa: {EMBEDDING_VECTOR_SIZE}. "
+                        "Controlla EMBEDDING_VECTOR_SIZE in settings.py."
+                    )
+
+                point = PointStruct(
+                    id=point_id,
+                    vector=vector,
+                    payload=build_payload(chunk),
+                )
+
+                points.append(point)
+                point_id += 1
+
+            client.upsert(
+                collection_name=collection_name,
+                points=points,
+            )
+    finally:
+        embedding_tool.close()
 
     print(f"[OK] Indicizzazione completata: {collection_name}")
     print(f"[OK] Qdrant local path: {QDRANT_LOCAL_PATH}")

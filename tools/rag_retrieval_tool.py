@@ -27,6 +27,7 @@ class QdrantRetrieval(Retrieval):
         force_document_type_filter: bool = True,
         candidate_top_k: int = settings.RAG_CANDIDATE_TOP_K_GUIDELINES,
         rerank_enabled: bool = settings.RAG_RERANK_ENABLED,
+        release_models_after_use: bool = settings.RAG_RELEASE_MODELS_AFTER_USE,
     ) -> None:
         super().__init__(context_label=context_label, passive=passive, active=active)
 
@@ -37,12 +38,11 @@ class QdrantRetrieval(Retrieval):
         self._force_document_type_filter = force_document_type_filter
 
         self._client = get_qdrant_client(settings.QDRANT_LOCAL_PATH)
-        self._embedding_tool = EmbeddingTool(
-            model_name=settings.EMBEDDING_MODEL_NAME,
-        )
+        self._embedding_tool: EmbeddingTool | None = None
 
         self.candidate_top_k = int(candidate_top_k or self._default_top_k)
         self.rerank_enabled = bool(rerank_enabled)
+        self.release_models_after_use = bool(release_models_after_use)
         self._reranker_tool: RerankerTool | None = None
 
     def _query_text_from_context_query(self, query: ContextQuery) -> str:
@@ -117,7 +117,30 @@ class QdrantRetrieval(Retrieval):
                 limit=limit,
                 with_payload=True,
             ).points
-        
+
+    def _get_embedding_tool(self) -> EmbeddingTool:
+        if self._embedding_tool is None:
+            self._embedding_tool = EmbeddingTool(
+                model_name=settings.EMBEDDING_MODEL_NAME,
+            )
+
+        return self._embedding_tool
+
+    def _release_embedding_tool(self) -> None:
+        if self.release_models_after_use and self._embedding_tool is not None:
+            self._embedding_tool.close()
+
+    def _release_reranker_tool(self) -> None:
+        if self.release_models_after_use and self._reranker_tool is not None:
+            self._reranker_tool.close()
+
+    def close(self) -> None:
+        if self._embedding_tool is not None:
+            self._embedding_tool.close()
+
+        if self._reranker_tool is not None:
+            self._reranker_tool.close()
+
     def _get_reranker_tool(self) -> RerankerTool:
         if self._reranker_tool is None:
             self._reranker_tool = RerankerTool()
@@ -132,7 +155,12 @@ class QdrantRetrieval(Retrieval):
         if k <= 0:
             k = self._default_top_k
 
-        query_vector = self._embedding_tool.embed_query(query_text)
+        embedding_tool = self._get_embedding_tool()
+        try:
+            query_vector = embedding_tool.embed_query(query_text)
+        finally:
+            self._release_embedding_tool()
+
         query_filter = self._build_filter(query)
 
         candidate_k = max(k, self.candidate_top_k)
@@ -165,10 +193,13 @@ class QdrantRetrieval(Retrieval):
         if self.rerank_enabled and len(candidates) > 1:
             reranker = self._get_reranker_tool()
 
-            ranked = reranker.rank(
-                query=query_text,
-                documents=[candidate["text"] for candidate in candidates],
-            )
+            try:
+                ranked = reranker.rank(
+                    query=query_text,
+                    documents=[candidate["text"] for candidate in candidates],
+                )
+            finally:
+                self._release_reranker_tool()
 
             reranked_candidates: list[dict[str, Any]] = []
 

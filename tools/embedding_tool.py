@@ -7,6 +7,7 @@ from typing import List
 from sentence_transformers import SentenceTransformer
 
 from config import settings
+from tools.model_lifecycle import release_model_memory
 
 
 @dataclass(frozen=True)
@@ -46,7 +47,7 @@ class EmbeddingTool:
         self.allow_hf_fallback = allow_hf_fallback
 
         self.runtime_info = self._select_runtime()
-        self.model = self._load_model(self.runtime_info)
+        self.model: SentenceTransformer | None = None
 
     @staticmethod
     def _has_openvino_artifacts(path: Path) -> bool:
@@ -234,6 +235,21 @@ class EmbeddingTool:
             trust_remote_code=True,
         )
 
+    def _ensure_model(self) -> SentenceTransformer:
+        if self.model is None:
+            self.model = self._load_model(self.runtime_info)
+
+        return self.model
+
+    def close(self) -> None:
+        if self.model is None:
+            return
+
+        model = self.model
+        self.model = None
+        del model
+        release_model_memory()
+
     def describe_runtime(self) -> str:
         info = self.runtime_info
         suffix = f" ({info.details})" if info.details else ""
@@ -265,7 +281,9 @@ class EmbeddingTool:
         Qui NON aggiungiamo instruction ai documenti.
         I chunk devono restare nel loro contenuto naturale.
         """
-        vectors = self.model.encode(
+        model = self._ensure_model()
+
+        vectors = model.encode(
             texts,
             batch_size=batch_size,
             normalize_embeddings=True,
@@ -282,7 +300,9 @@ class EmbeddingTool:
         """
         formatted_query = self._format_query(query)
 
-        vector = self.model.encode(
+        model = self._ensure_model()
+
+        vector = model.encode(
             [formatted_query],
             batch_size=1,
             normalize_embeddings=True,

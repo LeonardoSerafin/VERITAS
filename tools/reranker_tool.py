@@ -7,6 +7,7 @@ from typing import Sequence
 from sentence_transformers import CrossEncoder
 
 from config import settings
+from tools.model_lifecycle import release_model_memory
 
 
 @dataclass(frozen=True)
@@ -48,7 +49,7 @@ class RerankerTool:
         self.instruction = instruction
 
         self.runtime_info = self._select_runtime()
-        self.model = self._load_model(self.runtime_info)
+        self.model: CrossEncoder | None = None
 
     @staticmethod
     def _has_openvino_artifacts(path: Path) -> bool:
@@ -240,6 +241,21 @@ class RerankerTool:
             trust_remote_code=True,
         )
 
+    def _ensure_model(self) -> CrossEncoder:
+        if self.model is None:
+            self.model = self._load_model(self.runtime_info)
+
+        return self.model
+
+    def close(self) -> None:
+        if self.model is None:
+            return
+
+        model = self.model
+        self.model = None
+        del model
+        release_model_memory()
+
     def describe_runtime(self) -> str:
         info = self.runtime_info
         suffix = f" ({info.details})" if info.details else ""
@@ -265,7 +281,9 @@ class RerankerTool:
         if not pairs:
             return []
 
-        scores = self.model.predict(
+        model = self._ensure_model()
+
+        scores = model.predict(
             pairs,
             batch_size=self.batch_size,
             show_progress_bar=False,

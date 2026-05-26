@@ -1,13 +1,12 @@
 from pathlib import Path
 from typing import Any, Dict, Optional
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from PIL import Image
-
 from torchvision import transforms, datasets
 from pytorch_lightning import LightningModule
+from config import settings
 
 
 learning_rate = 1e-3
@@ -91,7 +90,7 @@ class GrapeDiseaseCNNTool:
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
 
         dataset = datasets.ImageFolder(root=self.data_dir)
-        self.class_names = dataset.classes
+        self.class_names = settings.CLASS_NAMES
         num_classes = len(self.class_names)
 
         self.transform = transforms.Compose([

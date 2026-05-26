@@ -75,7 +75,10 @@ def search(
         model_name=EMBEDDING_MODEL_NAME,
     )
 
-    query_vector = embedding_tool.embed_query(query)
+    try:
+        query_vector = embedding_tool.embed_query(query)
+    finally:
+        embedding_tool.close()
 
     query_filter = make_filter(
         status=status,

@@ -11,6 +11,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 MODEL_PATH = PROJECT_ROOT / "models" / "modello_cnn_vine_disease-AdaptiveAvgPool2d--99.5.ckpt"
 DATASET_DIR = PROJECT_ROOT / "example_dataset"
+CLASS_NAMES = [
+    "Black Rot (Guignardia bidwelii)", 
+    "ESCA", 
+    "Sana", 
+    "Escoriosi (Phomopsis viticola)"
+    ]
 IMAGE_SIZE = 256
 VISION_TOP_K = 4
 
@@ -70,6 +76,8 @@ EMBEDDING_BATCH_SIZE = 4
 # RAG settings
 
 RAG_RERANK_ENABLED = True
+# Riduce il picco RAM/VRAM: embedder e reranker vengono scaricati dopo l'uso.
+RAG_RELEASE_MODELS_AFTER_USE = True
 
 RAG_CANDIDATE_TOP_K_GUIDELINES = 50
 RAG_CANDIDATE_TOP_K_PRODUCTS = 50
