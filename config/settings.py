@@ -10,7 +10,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 # Vision Agent settings
 
 MODEL_PATH = PROJECT_ROOT / "models" / "modello_cnn_vine_disease-AdaptiveAvgPool2d--99.5.ckpt"
-DATASET_DIR = PROJECT_ROOT / "dataset" / "Dataset-splittato" / "train"
+DATASET_DIR = PROJECT_ROOT / "example_dataset"
 IMAGE_SIZE = 256
 VISION_TOP_K = 4
 
