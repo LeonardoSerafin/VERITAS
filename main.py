@@ -5,7 +5,7 @@ from architecture.masfactory_graph import build_architecture
 from architecture.live_monitor import install_live_hooks
 from pprint import pprint
 
-image_path = "example_dataset/Black Rot/0aff8add-93ad-4099-97ae-23515744e620___FAM_B.Rot 0748.JPG"
+image_path = "example_dataset/Black Rot (Guignardia bidwellii)/0aff8add-93ad-4099-97ae-23515744e620___FAM_B.Rot 0748.JPG"
 
 def main():
     initialize_cnn_tool(

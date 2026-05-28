@@ -66,7 +66,7 @@ class GrapeDiseaseCNNTool:
     Tool riutilizzabile per inferenza su immagini di foglie di vite.
 
     Input:
-        image_path: path immagine
+        image: oggetto Image.Image (PIL)
 
     Output:
         dict con malattia predetta, confidence, top-k, device, ecc.
@@ -102,13 +102,8 @@ class GrapeDiseaseCNNTool:
         self.model.to(self.device)
         self.model.eval()
 
-    def analyze(self, image_path: str) -> Dict[str, Any]:
-        image_path_obj = Path(image_path)
-
-        if not image_path_obj.exists():
-            raise FileNotFoundError(f"Immagine non trovata: {image_path}")
-
-        image = Image.open(image_path).convert("RGB")
+    def analyze(self, image: Image.Image) -> Dict[str, Any]:
+        
         x = self.transform(image).unsqueeze(0).to(self.device)
 
         with torch.no_grad():
@@ -179,7 +174,7 @@ def initialize_cnn_tool(
     return _cnn_tool_instance
 
 
-def analyze_leaf_image(image_path: str) -> Dict[str, Any]:
+def analyze_leaf_image(image: Image.Image) -> Dict[str, Any]:
     """
     Funzione-tool da far chiamare agli agenti.
 
@@ -199,4 +194,4 @@ def analyze_leaf_image(image_path: str) -> Dict[str, Any]:
             "Chiama prima initialize_cnn_tool(...)."
         )
 
-    return _cnn_tool_instance.analyze(image_path)
+    return _cnn_tool_instance.analyze(image)
