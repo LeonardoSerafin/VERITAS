@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Any, Dict, Optional
 import torch
 import torch.nn as nn
@@ -89,7 +88,6 @@ class GrapeDiseaseCNNTool:
 
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
 
-        dataset = datasets.ImageFolder(root=self.data_dir)
         self.class_names = settings.CLASS_NAMES
         num_classes = len(self.class_names)
 
@@ -179,7 +177,7 @@ def analyze_leaf_image(image: Image.Image) -> Dict[str, Any]:
     Funzione-tool da far chiamare agli agenti.
 
     Esempio:
-        result = analyze_leaf_image("test_leaf.jpg")
+        result = analyze_leaf_image(image)
 
     Ritorna:
         {

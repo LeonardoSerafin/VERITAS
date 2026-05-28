@@ -1,9 +1,7 @@
-import os
 from masfactory import CustomNode, RootGraph, ImageAsset
-from tempfile import NamedTemporaryFile
 from tools.cnn_leaf_disease_tool import analyze_leaf_image
+from tools.image_processing_tool import process_image_for_cnn
 from PIL import Image
-from pathlib import Path
 import io
 
 
@@ -24,17 +22,27 @@ def vision_agent_function(input_data: dict) -> dict:
     if not image:
         raise ValueError("Input data must contain 'image' key.")
 
-    PIL_image = ImageAsset_to_PIL_Image(image)
-
-    cnn_result = analyze_leaf_image(PIL_image)
-
-    agent_output = {
-        "agent_name": "VisionAgent",
-        "task": "leaf_disease_classification",
-        "disease": cnn_result["predicted_class"],
-        "confidence_percent": cnn_result["confidence_percent"],
-        "top_predictions": cnn_result["top_predictions"],
-    }
+    PIL_image, image_proc_result = process_image_for_cnn(image)
+    
+    if image_proc_result == "DISCARD":
+        agent_output = {
+            "agent_name": "VisionAgent",
+            "task": "leaf_disease_classification",
+            "disease": "",
+            "confidence_percent": "",
+            "top_predictions": "",
+            "state": "invalid image"
+        }
+    elif image_proc_result == "USABLE":
+        cnn_result = analyze_leaf_image(PIL_image)
+        agent_output = {
+            "agent_name": "VisionAgent",
+            "task": "leaf_disease_classification",
+            "disease": cnn_result["predicted_class"],
+            "confidence_percent": cnn_result["confidence_percent"],
+            "top_predictions": cnn_result["top_predictions"],
+            "state": "valid image"
+        }
 
     return agent_output
 

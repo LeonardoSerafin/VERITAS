@@ -64,6 +64,7 @@ def build_architecture():
             "disease": "predicted disease",
             "confidence_percent": "confidence_percent",
             "top_predictions": "top_predictions",
+            "state": "valid or invalid image",
         },
     )
 
@@ -123,6 +124,7 @@ def build_architecture():
             "disease": "predicted disease",
             "confidence_percent": "confidence_percent",
             "top_predictions": "top_predictions",
+            "state": "valid or invalid image",
         },
     )
 
