@@ -1,6 +1,6 @@
 from masfactory import CustomNode, RootGraph, ImageAsset
 from tools.cnn_leaf_disease_tool import analyze_leaf_image
-from tools.image_processing_tool import process_image_for_cnn
+from tools.image_preprocessing_tool import preprocess_image
 from PIL import Image
 import io
 
@@ -22,7 +22,7 @@ def vision_agent_function(input_data: dict) -> dict:
     if not image:
         raise ValueError("Input data must contain 'image' key.")
 
-    PIL_image, image_proc_result = process_image_for_cnn(image)
+    PIL_image, image_proc_result = preprocess_image(image)
     
     if image_proc_result == "DISCARD":
         agent_output = {

@@ -216,7 +216,7 @@ def fix_image(pil_image: Image.Image, reasons: dict, brightness_target: float = 
                 
     return Image.fromarray(fixed_image_np)
 
-def process_image_for_cnn(image_asset: ImageAsset) -> tuple[Image.Image, str]:
+def preprocess_image(image_asset: ImageAsset) -> tuple[Image.Image, str]:
     """
     Funzione unica di livello superiore progettata per essere utilizzata
     come tool principale da un agente o in automatico.
