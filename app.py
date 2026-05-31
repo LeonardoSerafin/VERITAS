@@ -101,11 +101,12 @@ def initialize_runtime() -> dict[str, Any]:
     settings = deps["settings"]
 
     deps["initialize_cnn_tool"](
-        checkpoint_path=str(settings.MODEL_PATH),
+        checkpoint_path=str(settings.CNN_MODEL_PATH),
         data_dir=str(settings.DATASET_DIR),
         image_size=settings.IMAGE_SIZE,
-        top_k=settings.VISION_TOP_K,
+        top_k=settings.VISION_CNN_TOP_K,
     )
+    deps["get_grape_leaf_validator"]()
     return deps
 
 
@@ -335,6 +336,7 @@ def load_runtime_dependencies() -> dict[str, Any]:
     from architecture.masfactory_graph import build_architecture  # type: ignore
     from config import settings  # type: ignore
     from tools.cnn_leaf_disease_tool import initialize_cnn_tool  # type: ignore
+    from tools.grape_leaf_validator_tool import get_grape_leaf_validator  # type: ignore
 
     return {
         "ImageAsset": ImageAsset,
@@ -342,6 +344,7 @@ def load_runtime_dependencies() -> dict[str, Any]:
         "build_architecture": build_architecture,
         "settings": settings,
         "initialize_cnn_tool": initialize_cnn_tool,
+        "get_grape_leaf_validator": get_grape_leaf_validator,
     }
 
 
@@ -363,9 +366,12 @@ def main() -> None:
     with col_left:
         st.subheader("Input")
         uploaded_file = st.file_uploader(
-            "Carica immagine foglia",
+            "Carica immagine foglia di vite",
             type=["jpg", "jpeg", "png"],
-            help=f"Formati supportati: JPG/JPEG/PNG. Max {MAX_UPLOAD_MB} MB.",
+            help=(
+                f"Formati supportati: JPG/JPEG/PNG. Max {MAX_UPLOAD_MB} MB. "
+                "L'immagine verra controllata, pre-processata se necessario e validata come foglia di vite."
+            ),
         )
         if uploaded_file is not None:
             st.image(uploaded_file, caption="Anteprima immagine", use_container_width=True)
