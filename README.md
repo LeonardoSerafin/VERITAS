@@ -3,7 +3,8 @@
 VERITAS è un sistema multi-agente per supporto decisionale in viticoltura. Combina classificazione visiva, contesto ambientale, retrieval semantico su documenti agronomici/prodotti fitosanitari e sintesi finale tramite LLM.
 
 Funzioni principali:
-- classificazione malattia fogliare da immagine con CNN
+- preprocessing dell'immagine e validazione foglia di vite prima della diagnosi
+- classificazione malattia fogliare da immagine con CNN dedicata
 - normalizzazione del contesto agronomico e meteo
 - retrieval RAG su linee guida e prodotti tramite Qdrant locale
 - embedding Qwen3 con runtime automatico OpenVINO/PyTorch
@@ -16,12 +17,30 @@ Il grafo MASFactory è definito in `architecture/masfactory_graph.py`.
 
 Nodi principali:
 - `InputParserNode`: normalizza input utente.
-- `VisionAgentNode`: classifica l'immagine della foglia.
+- `VisionAgentNode`: pre-processa l'immagine, verifica che sia una foglia di vite analizzabile e poi classifica la malattia con CNN.
 - `ContextAgentNode`: prepara contesto locale/meteo/agronomico.
-- `ConditionalNode`: decide se attivare RAG o bypass.
-- `RAGAgentNode`: recupera evidenze documentali se la malattia non è `Healthy`.
-- `BypassNode`: evita retrieval quando la foglia è sana.
+- `ConditionalNode`: decide se attivare RAG o bypass in base a malattia e stato dell'immagine.
+- `RAGAgentNode`: recupera evidenze documentali se l'immagine è valida e la malattia non è `Sana`.
+- `BypassNode`: evita retrieval quando la foglia è sana o l'immagine non è utilizzabile.
 - `DecisionAgentNode`: produce la risposta finale.
+
+## Pipeline Visiva
+
+Il `VisionAgentNode` gestisce l'intera pipeline visuale prima di produrre gli input per gli altri nodi:
+
+1. `tools/image_preprocessing_tool.py` converte l'`ImageAsset` in `PIL.Image`, valuta qualità tecnica dell'immagine e applica correzioni leggere quando possibile.
+2. Se il preprocessing giudica l'immagine non recuperabile, il VisionAgent restituisce `state = "unusable image"` e non chiama la CNN.
+3. `tools/grape_leaf_validator_tool.py` usa un classificatore MobileNetV3 Small binario per distinguere `valid_grape_leaf` da `invalid_image`.
+4. Se l'immagine non rappresenta una foglia di vite analizzabile, il VisionAgent restituisce `state = "invalid image"` e non chiama la CNN.
+5. Solo con `state = "valid image"`, `tools/cnn_leaf_disease_tool.py` esegue la classificazione della malattia fogliare.
+
+Stati principali prodotti dal VisionAgent:
+
+- `valid image`: immagine valida, classificazione CNN eseguita.
+- `invalid image`: immagine tecnicamente leggibile ma non riconosciuta come foglia di vite analizzabile.
+- `unusable image`: immagine scartata dal preprocessing per qualita tecnica insufficiente.
+
+Gli stati `invalid image` e `unusable image` vanno in bypass del RAG e il `DecisionAgentNode` chiede una nuova immagine senza produrre raccomandazioni agronomiche.
 
 ## Pipeline RAG
 
@@ -78,15 +97,48 @@ Questi asset sono ignorati da Git e vanno ricreati o copiati sulla macchina loca
 
 Asset presenti in repo:
 - `models/modello_cnn_vine_disease-AdaptiveAvgPool2d--99.5.ckpt`: checkpoint CNN.
+- `models/grape_leaf_validator_mobilenetv3_small_best.pt`: checkpoint validator foglia di vite vs non foglia di vite.
 - `example_dataset/`: mini dataset per bootstrap rapido.
 - `data/guidelines/chunks/guideline_chunks.jsonl`: chunk linee guida già pronti.
 - `data/products/chunks/product_chunks.jsonl`: chunk prodotti già pronti.
 
 ## Bootstrap Su Macchina Nuova
 
-### 1. Configura Dataset CNN
+### 1. Configura Modelli Vision
 
-Il codice usa `DATASET_DIR` in `config/settings.py` per leggere le classi.
+I path e le classi vision sono configurati in `config/settings.py`.
+
+Checkpoint CNN malattie:
+
+```python
+CNN_MODEL_PATH = PROJECT_ROOT / "models" / "modello_cnn_vine_disease-AdaptiveAvgPool2d--99.5.ckpt"
+DISEASE_CLASS_NAMES = [
+    "Black Rot (Guignardia bidwelii)",
+    "ESCA",
+    "Sana",
+    "Escoriosi (Phomopsis viticola)",
+]
+IMAGE_SIZE = 256
+VISION_CNN_TOP_K = 4
+```
+
+Checkpoint validatore foglia di vite:
+
+```python
+VALIDATOR_MODEL_PATH = PROJECT_ROOT / "models" / "grape_leaf_validator_mobilenetv3_small_best.pt"
+VALIDATOR_CLASS_TO_IDX = {
+    "invalid_image": 0,
+    "valid_grape_leaf": 1,
+}
+VALIDATOR_THRESHOLD = 0.85
+VALIDATOR_DEVICE = "auto"
+```
+
+Dataset usato per addestrare il validatore MobileNetV3 Small: https://www.kaggle.com/datasets/leonardoserafinn/grapevine-leaf-vs-non-grapevine-leaf
+
+La cartella `Non foglie di vite/` contiene 10 immagini negative di esempio estratte da quel dataset, utili per smoke test manuali del validator e del bypass del RAG.
+
+`DATASET_DIR` resta configurabile per compatibilita con il tool CNN e per bootstrap locale.
 
 Per test rapido senza dataset completo, imposta:
 
@@ -218,7 +270,7 @@ streamlit run app.py
 Durante `main.py` vedrai log live via hook MASFactory:
 - `[START] <NodeName>`
 - `[OUTPUT] <NodeName>: ...`
-- `[END] <NodeName> (<ms>)`
+- `[END] <NodeName> (<s>)`
 
 Il risultato finale viene stampato con `pprint`.
 
@@ -243,4 +295,7 @@ py -3 scripts/test_rag_search.py --collection guidelines --query "peronospora vi
 - Primo run lento: Hugging Face sta scaricando modelli o OpenVINO sta compilando/cacheando il modello.
 - Retrieval vuoto o inconsistente: ricrea indice con `py -3 scripts/build_qdrant_index.py --target all --recreate`.
 - Errore su classi CNN/dataset mancante: verifica `DATASET_DIR` in `config/settings.py`, oppure usa `example_dataset`.
+- Errore su checkpoint CNN: verifica `CNN_MODEL_PATH` in `config/settings.py` e la presenza del file in `models/`.
+- Errore su validator foglia di vite: verifica `VALIDATOR_MODEL_PATH`, `VALIDATOR_CLASS_TO_IDX` e la presenza di `models/grape_leaf_validator_mobilenetv3_small_best.pt`.
+- Immagine scartata prima della diagnosi: controlla `state` nel log del `VisionAgentNode`; `unusable image` indica qualità tecnica insufficiente, `invalid image` indica immagine non riconosciuta come foglia di vite analizzabile.
 - Errore API meteo/LLM: verifica connettività, `OPENAI_API_KEY` e `BASE_URL` in `.env`.
