@@ -9,16 +9,31 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 # Vision Agent settings
 
-MODEL_PATH = PROJECT_ROOT / "models" / "modello_cnn_vine_disease-AdaptiveAvgPool2d--99.5.ckpt"
+CNN_MODEL_PATH = PROJECT_ROOT / "models" / "modello_cnn_vine_disease-AdaptiveAvgPool2d--99.5.ckpt"
 DATASET_DIR = PROJECT_ROOT / "example_dataset"
-CLASS_NAMES = [
+DISEASE_CLASS_NAMES = [
     "Black Rot (Guignardia bidwelii)", 
     "ESCA", 
     "Sana", 
     "Escoriosi (Phomopsis viticola)"
     ]
 IMAGE_SIZE = 256
-VISION_TOP_K = 4
+VISION_CNN_TOP_K = 4
+
+# Grape leaf validator settings
+
+VALIDATOR_MODEL_PATH = PROJECT_ROOT / "models" / "grape_leaf_validator_mobilenetv3_small_best.pt"
+VALIDATOR_CLASS_TO_IDX = {
+    "invalid_image": 0,
+    "valid_grape_leaf": 1,
+}
+VALIDATOR_THRESHOLD = 0.85
+VALIDATOR_DEVICE = "auto"
+VALIDATOR_RESIZE_SIZE = 256
+VALIDATOR_CROP_SIZE = 224
+VALIDATOR_IMAGENET_MEAN = [0.485, 0.456, 0.406]
+VALIDATOR_IMAGENET_STD = [0.229, 0.224, 0.225]
+
 
 DEFAULT_LLM_MODEL = LegacyOpenAIModel(
     model_name="google/gemini-3.1-flash-lite",

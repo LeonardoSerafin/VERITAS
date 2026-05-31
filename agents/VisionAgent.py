@@ -1,6 +1,7 @@
 from masfactory import CustomNode, RootGraph, ImageAsset
 from tools.cnn_leaf_disease_tool import analyze_leaf_image
 from tools.image_preprocessing_tool import preprocess_image
+from tools.grape_leaf_validator_tool import validate_grape_leaf
 from PIL import Image
 import io
 
@@ -25,7 +26,19 @@ def vision_agent_function(input_data: dict) -> dict:
     PIL_image, image_proc_result = preprocess_image(image)
     
     if image_proc_result == "DISCARD":
-        agent_output = {
+        return {
+            "agent_name": "VisionAgent",
+            "task": "leaf_disease_classification",
+            "disease": "",
+            "confidence_percent": "",
+            "top_predictions": "",
+            "state": "unusable image"
+        }
+
+    PIL_image, validation_result = validate_grape_leaf(PIL_image)
+
+    if validation_result == "NOT_GRAPEVINE_LEAF":
+        return {
             "agent_name": "VisionAgent",
             "task": "leaf_disease_classification",
             "disease": "",
@@ -33,9 +46,10 @@ def vision_agent_function(input_data: dict) -> dict:
             "top_predictions": "",
             "state": "invalid image"
         }
-    elif image_proc_result == "USABLE":
+
+    elif validation_result == "GRAPEVINE_LEAF":
         cnn_result = analyze_leaf_image(PIL_image)
-        agent_output = {
+        return {
             "agent_name": "VisionAgent",
             "task": "leaf_disease_classification",
             "disease": cnn_result["predicted_class"],
@@ -43,8 +57,6 @@ def vision_agent_function(input_data: dict) -> dict:
             "top_predictions": cnn_result["top_predictions"],
             "state": "valid image"
         }
-
-    return agent_output
 
 
 def create_vision_agent_node(graph: RootGraph, node_name: str = "VisionAgentNode"):    
