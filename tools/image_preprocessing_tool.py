@@ -33,8 +33,11 @@ def blockiness_score(gray: np.ndarray, block_size: int = 8) -> float:
     confrontando le differenze sui bordi dei blocchi 8x8 con le differenze naturali nell'immagine.
     """
     gray = gray.astype(np.float32)
-    vertical = gray[:, block_size::block_size] - gray[:, block_size - 1::block_size]
-    horizontal = gray[block_size::block_size, :] - gray[block_size - 1::block_size, :]
+    cols = np.arange(block_size, gray.shape[1], block_size)
+    rows = np.arange(block_size, gray.shape[0], block_size)
+
+    vertical = gray[:, cols] - gray[:, cols - 1]
+    horizontal = gray[rows, :] - gray[rows - 1, :]
     boundary = np.mean(np.abs(vertical)) + np.mean(np.abs(horizontal))
     natural = np.mean(np.abs(np.diff(gray, axis=1))) + np.mean(np.abs(np.diff(gray, axis=0)))
     return float(boundary / (natural + 1e-8))
@@ -243,6 +246,3 @@ def preprocess_image(image_asset: ImageAsset) -> tuple[Image.Image, str]:
         return fixed_pil_image, 'USABLE'
     else:  # status == 'good'
         return pil_image, 'USABLE'
-
-
-    

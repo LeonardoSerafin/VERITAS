@@ -6,7 +6,7 @@ from architecture.live_monitor import install_live_hooks
 from pprint import pprint
 
 # image_path = "example_dataset/Black Rot (Guignardia bidwellii)/0aff8add-93ad-4099-97ae-23515744e620___FAM_B.Rot 0748.JPG"
-image_path = "Non foglie di vite/013118__plantvillage__Apple___Cedar_apple_rust__e5521dec-ea35-479d-93be-38743927db53___FREC_C.Rust_4356.JPG"
+image_path = "Non foglie di vite/011438__NonGrapevineLeaf__NonGrapevineLeaf__non_leafimage2561.jpg"
 
 def main():
     initialize_cnn_tool(
