@@ -8,7 +8,7 @@ def rag_needed(msg: dict, _attrs: dict) -> bool:
 def rag_not_needed(msg: dict, _attrs: dict) -> bool:
     disease = str(msg.get("disease", "")).strip().lower()
     state = str(msg.get("state", "")).strip().lower()
-    return (disease == "sana") or (state == "invalid image")
+    return (disease == "sana") or (state == "invalid image") or (state == "unusable image")
 
 def create_conditional_node(graph: RootGraph, node_name: str = "ConditionalNode"):
     return graph.create_node(

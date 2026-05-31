@@ -88,7 +88,7 @@ class GrapeDiseaseCNNTool:
 
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
 
-        self.class_names = settings.CLASS_NAMES
+        self.class_names = settings.DISEASE_CLASS_NAMES
         num_classes = len(self.class_names)
 
         self.transform = transforms.Compose([

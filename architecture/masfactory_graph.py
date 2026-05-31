@@ -64,7 +64,7 @@ def build_architecture():
             "disease": "predicted disease",
             "confidence_percent": "confidence_percent",
             "top_predictions": "top_predictions",
-            "state": "valid or invalid image",
+            "state": "valid or invalid or unusable image",
         },
     )
 
@@ -124,7 +124,7 @@ def build_architecture():
             "disease": "predicted disease",
             "confidence_percent": "confidence_percent",
             "top_predictions": "top_predictions",
-            "state": "valid or invalid image",
+            "state": "valid or invalid or unusable image",
         },
     )
 
@@ -132,7 +132,7 @@ def build_architecture():
         decisionAgent,
         {
             "predicted_disease": "final predicted disease based on the integrated analysis",
-            "risk_level": "estimated risk level for the vineyard (LOW, MEDIUM, HIGH)",
+            "risk_level": "estimated risk level for the vineyard (LOW, MEDIUM, HIGH, NONE)",
             "decision_report": "final decision support recommendation with rationale and uncertainty",
         },
     )
