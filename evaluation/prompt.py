@@ -42,12 +42,15 @@ RUBRIC_VALID: dict[str, str] = {
         "e tipo di vino indicati nel contesto?"
     ),
     "uso_corretto_rag": (
-        "Il report usa il rag_context recuperato senza inventare informazioni non "
-        "presenti? Rispetta i vincoli/regole recuperati e non li contraddice?"
+        "Il report usa le evidenze recuperate (FONTI RECUPERATE + rag_context) "
+        "senza inventare informazioni non presenti? Rispetta i vincoli/regole "
+        "recuperati e non li contraddice?"
     ),
     "citazioni_tracciabilita": (
-        "Le fonti (documento, pagina/sezione) sono citate vicino all'affermazione "
-        "che supportano, non raggruppate solo alla fine?"
+        "Le fonti sono citate vicino all'affermazione che supportano (non solo alla "
+        "fine)? Una citazione e' tracciabile se il documento e la pagina/chunk "
+        "corrispondono a una voce delle FONTI RECUPERATE: NON considerarla inventata "
+        "se compare in quella lista anche quando non e' nella prosa del rag_context."
     ),
     "sicurezza_decisionale": (
         "Il sistema evita trattamenti aggressivi quando i dati sono insufficienti, "
@@ -58,8 +61,10 @@ RUBRIC_VALID: dict[str, str] = {
         "condizioni che farebbero cambiare decisione?"
     ),
     "non_allucinazione": (
-        "Il report NON introduce prodotti, dosi, tempi di carenza o vincoli legali "
-        "non supportati dagli input o dalle evidenze recuperate?"
+        "Il report NON introduce prodotti, dosi, tempi di carenza, documenti, pagine "
+        "o vincoli legali non supportati dagli input o dalle evidenze recuperate "
+        "(FONTI RECUPERATE + rag_context)? Un documento/pagina citato che compare "
+        "nelle FONTI RECUPERATE NON e' un'allucinazione."
     ),
     "chiarezza": (
         "Il report e' comprensibile e ben strutturato per un utente agricolo/tecnico?"
@@ -155,6 +160,21 @@ def build_run_summary(run: dict[str, Any]) -> str:
     if not rag_context:
         rag_context = "(nessun RAG: ramo bypass o non eseguito)"
 
+    # Structured retrieval hits carry the verifiable citation metadata
+    # (document, page, chunk_id, score). They are shown to the evaluator so it
+    # can check the report's citations against real sources, instead of seeing
+    # only the prose rag_context (which drops page/chunk references).
+    hits = rag.get("guidelines_hits")
+    if isinstance(hits, list) and hits:
+        hits_block = "\n".join(
+            f"- {h.get('document', '?')} | pagina: {h.get('page', 'N/A')} "
+            f"| chunk: {h.get('chunk_id', '?')} | score: {h.get('score', '?')}"
+            for h in hits
+            if isinstance(h, dict)
+        ) or "(nessuna fonte strutturata)"
+    else:
+        hits_block = "(nessuna fonte strutturata: ramo bypass o non eseguito)"
+
     lines = [
         "## INPUT UTENTE",
         f"- Localita': {payload.get('location', '')}",
@@ -171,7 +191,12 @@ def build_run_summary(run: dict[str, Any]) -> str:
         "## CONTEXT AGENT",
         f"- Meteo: {context.get('meteo_forecast', '')}",
         "",
-        "## RAG CONTEXT (evidenze recuperate)",
+        "## FONTI RECUPERATE (citazioni verificabili — guidelines_hits)",
+        "Una citazione e' valida se corrisponde a una di queste fonti "
+        "(documento + pagina/chunk).",
+        hits_block,
+        "",
+        "## RAG CONTEXT (sintesi in prosa del RAG agent)",
         str(rag_context),
         "",
         "## OUTPUT DECISION AGENT (oggetto da valutare)",
