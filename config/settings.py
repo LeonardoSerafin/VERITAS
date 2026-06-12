@@ -42,6 +42,17 @@ DEFAULT_LLM_MODEL = LegacyOpenAIModel(
 )
 
 
+# Evaluation harness settings
+#
+# L'evaluator (evaluation/evaluate_outputs.py) e' esterno al grafo VERITAS e
+# deve essere un modello piu' capace di quello giudicato. E' configurabile via
+# env var EVALUATOR_MODEL; condivide la stessa API key/base_url (OpenRouter).
+EVALUATOR_LLM_MODEL_NAME = os.getenv("EVALUATOR_MODEL", "qwen/qwen3.7-max")
+EVALUATOR_API_KEY = os.getenv("OPENAI_API_KEY")
+EVALUATOR_BASE_URL = os.getenv("BASE_URL")
+EVALUATOR_TEMPERATURE = 0.0
+
+
 # Context Agent settings
 
 DEFAULT_LOCATION = "Piemonte"

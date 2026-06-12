@@ -41,3 +41,8 @@ vector_store/
 build/
 dist/
 .cache/
+
+# Evaluation
+evaluation/__pycache__/
+evaluation/runs/
+evaluation/reports/
