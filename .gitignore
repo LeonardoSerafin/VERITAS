@@ -44,5 +44,5 @@ dist/
 
 # Evaluation
 evaluation/__pycache__/
-evaluation/runs/
-evaluation/reports/
+evaluation/runs*
+evaluation/reports*
