@@ -28,14 +28,16 @@ flowchart LR
 
 ## Come si usa
 
+Per l'esecuzione di `run_cases.py` è consigliato impostare `RAG_RELEASE_MODELS_AFTER_USE = False` in `config/settings.py` 
+
 Dalla root del progetto (usa il Python del venv):
 
 ```powershell
 # 1. Esegui VERITAS su tutti i casi
-.venv/Scripts/python.exe evaluation/run_cases.py
+python evaluation/run_cases.py
 
 # 2. Valuta le run prodotte
-.venv/Scripts/python.exe evaluation/evaluate_outputs.py
+python evaluation/evaluate_outputs.py
 ```
 
 Flag utili:

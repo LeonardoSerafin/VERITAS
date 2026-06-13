@@ -2,6 +2,7 @@ from __future__ import annotations
 import copy
 import json
 import time
+import traceback
 from datetime import datetime, timezone
 from typing import Any
 from masfactory import Node
@@ -70,11 +71,7 @@ class EvaluationRecorder:
         node_record = self.nodes.setdefault(node_name, {})
         started = self._node_start_perf.get(node_name)
         duration = None if started is None else round(time.perf_counter() - started, 4)
-        error = {
-            "node": node_name,
-            "type": type(err).__name__,
-            "message": str(err),
-        }
+        error = self._describe_exception(node_name, err)
 
         node_record.update(
             {
@@ -85,6 +82,47 @@ class EvaluationRecorder:
             }
         )
         self.error = error
+
+    @staticmethod
+    def _format_tb(exc: BaseException) -> str:
+        return "".join(
+            traceback.format_exception(type(exc), exc, exc.__traceback__)
+        )
+
+    @classmethod
+    def _describe_exception(cls, node_name: str, err: BaseException) -> dict[str, Any]:
+        """
+        Describe a node failure, unwrapping wrappers like tenacity's RetryError
+        so the JSON carries the real underlying exception and its traceback
+        instead of an opaque 'RetryError[<Future ... raised TypeError>]'.
+        """
+        error: dict[str, Any] = {
+            "node": node_name,
+            "type": type(err).__name__,
+            "message": str(err),
+            "traceback": cls._format_tb(err),
+        }
+
+        # Find the real cause. tenacity.RetryError exposes .last_attempt
+        # (a Future); otherwise fall back to the standard exception chain.
+        inner: BaseException | None = None
+        last_attempt = getattr(err, "last_attempt", None)
+        if last_attempt is not None:
+            try:
+                inner = last_attempt.exception()
+            except Exception:
+                inner = None
+        if inner is None:
+            inner = err.__cause__ or err.__context__
+
+        if inner is not None and inner is not err:
+            error["root_cause"] = {
+                "type": type(inner).__name__,
+                "message": str(inner),
+                "traceback": cls._format_tb(inner),
+            }
+
+        return error
 
     def to_dict(self) -> dict[str, Any]:
         return {
