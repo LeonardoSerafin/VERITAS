@@ -46,3 +46,4 @@ dist/
 evaluation/__pycache__/
 evaluation/runs*
 evaluation/reports*
+evaluation/OLD-*
